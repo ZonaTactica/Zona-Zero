@@ -370,75 +370,74 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Activar el carrusel de imágenes
-    const products = document.querySelectorAll(".product");
+    const btnInicio = document.getElementById("btnInicio");
+    const btnProductos = document.getElementById("btnProductos");
+    const btnContacto = document.getElementById("btnContacto");
+    const btnCarrito = document.getElementById("btnCarrito");
 
-    products.forEach(product => {
-      const images = product.querySelectorAll(".image-container img");
-      let current = 0;
-      let interval;
+    const filtro = document.getElementById("filtro-productos");
+    const productos = document.getElementById("productos");
+    const contacto = document.getElementById("contacto");
+    const carrito = document.getElementById("cuadro-carrito");
 
-      function startCarousel() {
-        interval = setInterval(() => {
-          images.forEach((img, index) => {
-            img.classList.remove("active");
-            if (index === current) img.classList.add("active");
-          });
-          current = (current + 1) % images.length;
-        }, 2000);
-      }
-
-      function stopCarousel() {
-        clearInterval(interval);
-      }
-
-      product.addEventListener("mouseenter", startCarousel);
-      product.addEventListener("mouseleave", stopCarousel);
-    });
-
-    // Mostrar y ocultar al pasar el mouse
-    configurarHover('productos-btn', 'filtro-productos');
-    configurarHover('contacto-btn', 'cuadro-contacto');
-    configurarHover('carrito-btn', 'mensaje-carrito');
-
-    function configurarHover(botonId, cuadroId) {
-      const boton = document.getElementById(botonId);
-      const cuadro = document.getElementById(cuadroId);
-
-      // Mostrar al pasar el mouse sobre el botón
-      boton.addEventListener('mouseenter', () => {
-        cuadro.classList.add('mostrar');
-      });
-
-      // Ocultar al salir del cuadro o del botón
-      boton.addEventListener('mouseleave', () => {
-        setTimeout(() => {
-          if (!cuadro.matches(':hover') && !boton.matches(':hover')) {
-            cuadro.classList.remove('mostrar');
-          }
-        }, 300);
-      });
-
-      cuadro.addEventListener('mouseleave', () => {
-        setTimeout(() => {
-          if (!cuadro.matches(':hover') && !boton.matches(':hover')) {
-            cuadro.classList.remove('mostrar');
-          }
-        }, 300);
-      });
-
-      cuadro.addEventListener('mouseenter', () => {
-        cuadro.classList.add('mostrar');
+    function ocultarTodo() {
+      [filtro, contacto, carrito].forEach(el => {
+        el.classList.remove("visible");
+        el.classList.add("oculto");
       });
     }
 
-    // Acción del botón "Inicio" si querés agregar algo más
-    document.getElementById('inicio-btn').addEventListener('click', function (e) {
+    function mostrarElemento(elemento) {
+      ocultarTodo();
+      elemento.classList.remove("oculto");
+      setTimeout(() => elemento.classList.add("visible"), 10);
+    }
+
+    btnInicio.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("Clic en inicio");
+      ocultarTodo();
+      productos.classList.remove("oculto");
+    });
+
+    btnProductos.addEventListener("mouseenter", (e) => {
+      e.preventDefault();
+      mostrarElemento(filtro);
+    });
+
+    btnContacto.addEventListener("mouseenter", (e) => {
+      e.preventDefault();
+      mostrarElemento(contacto);
+    });
+
+    btnCarrito.addEventListener("mouseenter", (e) => {
+      e.preventDefault();
+      mostrarElemento(carrito);
+    });
+
+    // Permitir mantener visible mientras el mouse esté sobre el elemento
+    [filtro, contacto, carrito].forEach(el => {
+      el.addEventListener("mouseleave", () => {
+        el.classList.remove("visible");
+        el.classList.add("oculto");
+      });
+    });
+
+    const filtroItems = document.querySelectorAll(".filtro-item");
+    const todosLosProductos = document.querySelectorAll(".product");
+
+    filtroItems.forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const categoria = item.getAttribute("data-categoria");
+        ocultarTodo();
+        if (categoria === "todos") {
+          todosLosProductos.forEach(prod => prod.style.display = "block");
+        } else {
+          todosLosProductos.forEach(prod => {
+            prod.style.display = prod.classList.contains(categoria) ? "block" : "none";
+          });
+        }
+      });
     });
   });
 </script>
-
-</body>
-</html>
