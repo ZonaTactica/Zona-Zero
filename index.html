@@ -547,4 +547,59 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     actualizarCarrito();
   }
 });
+... // Continuación del script después de carrito.forEach
+
+      ${item.nombre} - ARS $${item.precio}
+      <button onclick="eliminarDelCarrito(${index})">Eliminar</button>
+    `;
+    cartItems.appendChild(li);
+    total += item.precio;
+  });
+
+  cartTotal.textContent = `Total: ARS $${total.toLocaleString()}`;
+}
+
+function eliminarDelCarrito(index) {
+  carrito.splice(index, 1);
+  actualizarCarrito();
+}
+
+document.querySelectorAll('.add-to-cart').forEach(boton => {
+  boton.addEventListener('click', () => {
+    const id = boton.getAttribute('data-id');
+    const nombre = boton.getAttribute('data-name');
+    const precio = parseInt(boton.getAttribute('data-price'));
+    const stock = parseInt(boton.getAttribute('data-stock'));
+
+    // Verificar si ya se agregó demasiadas veces
+    const cantidadEnCarrito = carrito.filter(item => item.id === id).length;
+    if (cantidadEnCarrito >= stock) {
+      alert('¡No hay más stock disponible!');
+      return;
+    }
+
+    carrito.push({ id, nombre, precio });
+    actualizarCarrito();
+  });
+});
+
+document.getElementById('finalizar-compra').addEventListener('click', () => {
+  if (carrito.length === 0) {
+    alert('El carrito está vacío.');
+    return;
+  }
+
+  let resumen = 'Resumen de tu compra:\n\n';
+  carrito.forEach(item => {
+    resumen += `- ${item.nombre}: ARS $${item.precio.toLocaleString()}\n`;
+  });
+  resumen += `\nTOTAL: ARS $${carrito.reduce((sum, item) => sum + item.precio, 0).toLocaleString()}\n\n`;
+
+  resumen += 'Por favor, contactanos para coordinar el pago por MercadoPago o en efectivo.';
+
+  alert(resumen);
+  carrito.length = 0;
+  actualizarCarrito();
+});
+
 </script>
