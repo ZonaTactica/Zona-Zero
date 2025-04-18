@@ -177,6 +177,38 @@
   font-size: 18px; /* Ajusta el tamaño del ícono */
   color: #fff; /* Asegura que los íconos sean blancos */
 }
+/* Ajustar la altura de las tarjetas para que todas tengan la misma */
+.product-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de zoom y sombra */
+  display: flex;
+  flex-direction: column; /* Para que los elementos dentro se acomoden en columna */
+  justify-content: space-between; /* Asegura que el contenido ocupe todo el espacio disponible */
+  height: 400px; /* Altura fija para todas las tarjetas */
+}
+
+/* Asegura que las imágenes dentro de las tarjetas tengan la misma altura */
+.product-card img {
+  max-width: 100%;
+  height: 180px;
+  object-fit: contain;
+  transition: opacity 0.3s ease-in-out; /* Añadir transición */
+}
+
+.product-card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.product-card p {
+  font-size: 16px;
+  color: #555;
+  margin-top: auto; /* Empuja el precio hacia abajo para que no se superponga con la imagen */
+}
 
   </style>
 </head>
