@@ -89,13 +89,29 @@
       products.forEach(product => {
         const images = product.querySelectorAll(".image-container img");
         let current = 0;
-        setInterval(() => {
-          images.forEach((img, index) => {
-            img.classList.remove("active");
-            if (index === current) img.classList.add("active");
-          });
-          current = (current + 1) % images.length;
-        }, 2000);
+        let interval;
+
+        // Función para iniciar el carrusel
+        function startCarousel() {
+          interval = setInterval(() => {
+            images.forEach((img, index) => {
+              img.classList.remove("active");
+              if (index === current) img.classList.add("active");
+            });
+            current = (current + 1) % images.length;
+          }, 2000);
+        }
+
+        // Función para detener el carrusel
+        function stopCarousel() {
+          clearInterval(interval);
+        }
+
+        // Iniciar el carrusel cuando el mouse entra
+        product.addEventListener("mouseenter", startCarousel);
+
+        // Detener el carrusel cuando el mouse sale
+        product.addEventListener("mouseleave", stopCarousel);
       });
     });
   </script>
@@ -117,24 +133,17 @@
 
   <section class="products">
     <!-- Productos 1 al 15 -->
-    <!-- Cada producto tiene 4 imágenes -->
-    <!-- Puedes reemplazar las rutas y los nombres según tus productos reales -->
-    
-    <!-- START productos -->
     <div class="product">
-      <div class="product">
-        <div class="image-container">
-          <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active">
-          <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2">
-          <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3">
-          <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4">
-        </div>
-        <h2>Borcegos Magnum</h2>
-        <p class="price">300.000 Ars</p>
+      <div class="image-container">
+        <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active">
+        <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2">
+        <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3">
+        <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4">
       </div>
-      Agregar al carrito
+      <h2>Borcegos Magnum</h2>
+      <p class="price">300.000 Ars</p>
     </div>
-    <!-- END productos -->
+    <!-- Repite los demás productos aquí... -->
   </section>
 </body>
 </html>
