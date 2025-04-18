@@ -49,7 +49,7 @@
       font-size: 16px;
     }
 
-    #productos, #contacto, #filtro-productos {
+    #productos, #contacto, #filtro-productos, #cuadro-carrito {
       padding: 20px;
     }
 
@@ -79,14 +79,14 @@
       display: none;
     }
 
-    .filtro {
+    .filtro, #contacto, #cuadro-carrito {
       opacity: 0;
       transform: translateY(-20px);
       transition: all 0.4s ease;
       text-align: center;
     }
 
-    .filtro.visible {
+    .filtro.visible, #contacto.visible, #cuadro-carrito.visible {
       display: block;
       opacity: 1;
       transform: translateY(0);
@@ -155,53 +155,54 @@
     <p>Contacto: <a href="mailto:zonatactica02@gmail.com">zonatactica02@gmail.com</a></p>
   </div>
 
+  <div id="cuadro-carrito" class="oculto">
+    <p>🛒 Tu carrito está vacío por ahora.</p>
+  </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const btnInicio = document.getElementById("btnInicio");
       const btnProductos = document.getElementById("btnProductos");
       const btnContacto = document.getElementById("btnContacto");
+      const btnCarrito = document.getElementById("btnCarrito");
+
       const filtro = document.getElementById("filtro-productos");
       const productos = document.getElementById("productos");
       const contacto = document.getElementById("contacto");
+      const carrito = document.getElementById("cuadro-carrito");
 
-      function mostrarInicio() {
-        filtro.classList.add("oculto");
-        filtro.classList.remove("visible");
-        productos.classList.remove("oculto");
-        contacto.classList.add("oculto");
+      function ocultarTodo() {
+        [filtro, contacto, carrito].forEach(el => {
+          el.classList.remove("visible");
+          setTimeout(() => el.classList.add("oculto"), 400);
+        });
       }
 
-      function mostrarFiltro() {
-        filtro.classList.remove("oculto");
-        setTimeout(() => filtro.classList.add("visible"), 10);
-        productos.classList.remove("oculto");
-        contacto.classList.add("oculto");
-      }
-
-      function ocultarFiltro() {
-        filtro.classList.remove("visible");
-        setTimeout(() => filtro.classList.add("oculto"), 400);
-      }
-
-      function mostrarContacto() {
-        ocultarFiltro();
-        productos.classList.add("oculto");
-        contacto.classList.remove("oculto");
+      function mostrarElemento(elemento) {
+        ocultarTodo();
+        elemento.classList.remove("oculto");
+        setTimeout(() => elemento.classList.add("visible"), 10);
       }
 
       btnInicio.addEventListener("click", (e) => {
         e.preventDefault();
-        mostrarInicio();
+        ocultarTodo();
+        productos.classList.remove("oculto");
       });
 
       btnProductos.addEventListener("mouseover", (e) => {
         e.preventDefault();
-        mostrarFiltro();
+        mostrarElemento(filtro);
       });
 
       btnContacto.addEventListener("mouseover", (e) => {
         e.preventDefault();
-        mostrarContacto();
+        mostrarElemento(contacto);
+      });
+
+      btnCarrito.addEventListener("mouseover", (e) => {
+        e.preventDefault();
+        mostrarElemento(carrito);
       });
 
       const filtroItems = document.querySelectorAll(".filtro-item");
@@ -211,16 +212,12 @@
         item.addEventListener("click", (e) => {
           e.preventDefault();
           const categoria = item.getAttribute("data-categoria");
-          ocultarFiltro();
+          ocultarTodo();
           if (categoria === "todos") {
             todosLosProductos.forEach(prod => prod.style.display = "block");
           } else {
             todosLosProductos.forEach(prod => {
-              if (prod.classList.contains(categoria)) {
-                prod.style.display = "block";
-              } else {
-                prod.style.display = "none";
-              }
+              prod.style.display = prod.classList.contains(categoria) ? "block" : "none";
             });
           }
         });
