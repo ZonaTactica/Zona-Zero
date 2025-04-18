@@ -158,6 +158,33 @@
       transition: opacity 0.5s, top 0.5s ease-in-out;
     }
 
+    #filtro-productos {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px;
+      display: none;
+    }
+
+    #filtro-productos ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #fff;
+      text-align: center;
+    }
+
+    #filtro-productos ul li {
+      margin: 10px 0;
+    }
+
+    #filtro-productos ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
@@ -175,7 +202,7 @@
   </nav>
 
   <!-- Menú desplegable de productos -->
-  <div id="filtro-productos" class="filtro oculto">
+  <div id="filtro-productos">
     <ul>
       <li><a href="#">Camperas</a></li>
       <li><a href="#">Borcegos</a></li>
@@ -395,8 +422,11 @@
 
       // Hover sobre el menú
       btnProductos.addEventListener("mouseenter", () => {
-        if (!filtro.querySelector("ul").hasChildNodes()) return; // Evita mostrar vacío
-        mostrarElemento(filtro);
+        filtro.style.display = 'block'; // Mostrar el menú de productos
+      });
+
+      btnProductos.addEventListener("mouseleave", () => {
+        filtro.style.display = 'none'; // Ocultar el menú de productos cuando el mouse se va
       });
 
       btnContacto.addEventListener("mouseenter", () => {
@@ -408,7 +438,7 @@
       });
 
       // Hover fuera del menú
-      [filtro, contacto, carrito].forEach(el => {
+      [contacto, carrito].forEach(el => {
         el.addEventListener("mouseleave", () => {
           el.classList.remove("mostrar");
           el.classList.add("oculto");
