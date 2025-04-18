@@ -508,15 +508,9 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
   boton.addEventListener('click', () => {
     const nombre = boton.getAttribute('data-name');
     const precio = parseFloat(boton.getAttribute('data-price'));
-
-    // Verificar stock antes de agregar
-    const cantidadEnCarrito = carrito.filter(p => p.nombre === nombre).length;
-    if (cantidadEnCarrito < stock) {
-      carrito.push({ nombre, precio });
-      actualizarCarrito();
-    } else {
-      alert("No hay más stock disponible de este producto.");
-    }
+ 
+ carrito.push({ nombre, precio });
+    actualizarCarrito();
   });
 });
 
