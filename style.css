@@ -102,3 +102,42 @@ p {
 .product:hover .product-images img {
   opacity: 1; /* Se vuelven visibles cuando se pasa el mouse sobre el producto */
 }
+
+/* Nuevos estilos para la funcionalidad de la barra de navegación y cuadros */
+.filtro, .cuadro {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  max-width: 300px;
+}
+
+.oculto {
+  display: none;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.cart {
+  cursor: pointer;
+}

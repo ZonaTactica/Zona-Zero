@@ -340,5 +340,58 @@
 
     <!-- Repite los demás productos aquí... -->
   </section>
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const products = document.querySelectorAll(".product");
+
+      products.forEach(product => {
+        const images = product.querySelectorAll(".image-container img");
+        let current = 0;
+        let interval;
+
+        // Función para iniciar el carrusel
+        function startCarousel() {
+          interval = setInterval(() => {
+            images.forEach((img, index) => {
+              img.classList.remove("active");
+              if (index === current) img.classList.add("active");
+            });
+            current = (current + 1) % images.length;
+          }, 2000);
+        }
+
+        // Función para detener el carrusel
+        function stopCarousel() {
+          clearInterval(interval);
+        }
+
+        // Iniciar el carrusel cuando el mouse entra
+        product.addEventListener("mouseenter", startCarousel);
+
+        // Detener el carrusel cuando el mouse sale
+        product.addEventListener("mouseleave", stopCarousel);
+      });
+    });
+
+    document.getElementById('productos-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      toggleElemento('filtro-productos');
+    });
+
+    document.getElementById('contacto-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      toggleElemento('cuadro-contacto');
+    });
+
+    document.getElementById('carrito-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      toggleElemento('mensaje-carrito');
+    });
+
+    function toggleElemento(id) {
+      const elemento = document.getElementById(id);
+      elemento.classList.toggle('oculto');
+    }
+  </script>
 </body>
 </html>
