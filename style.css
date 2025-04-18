@@ -87,6 +87,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center; /* Centra las imágenes */
 }
 
 .product-images img {
