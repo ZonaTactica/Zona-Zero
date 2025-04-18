@@ -31,6 +31,7 @@ header p {
   top: 0;
   left: 0;
   z-index: 1000;
+  padding: 10px 0;
 }
 
 .navbar ul {
@@ -43,19 +44,21 @@ header p {
 }
 
 .navbar ul li {
-  margin: 0 20px;
+  margin: 0 40px;
 }
 
 .navbar ul li a {
   text-decoration: none;
-  color: white;
-  font-size: 18px;
+  color: black;
+  font-size: 22px;  /* Aumentamos el tamaño */
+  font-weight: 600;  /* Para hacerlo más grueso */
   padding: 15px;
   transition: background-color 0.3s;
 }
 
 .navbar ul li a:hover {
   background-color: #444;
+  color: white;  /* Cambio de color cuando se pasa el mouse */
 }
 
 .products {
@@ -85,16 +88,4 @@ header p {
   height: auto;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-}
-
-.product h2 {
-  font-size: 18px;
-  margin: 10px 0 5px;
-  color: #333;
-}
-
-.product .price {
-  font-size: 16px;
-  color: #777;
-  margin-bottom: 15px;
 }
