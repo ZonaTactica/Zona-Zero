@@ -40,6 +40,7 @@
       font-size: 18px;
     }
 
+    /* Icono del carrito */
     .cart {
       position: absolute;
       left: 20px;
@@ -133,12 +134,12 @@
   <!-- Barra de navegación -->
   <nav class="navbar">
     <ul>
+      <li><a href="#" id="inicio-btn">Inicio</a></li>
       <li><a href="#" id="productos-btn">Productos</a></li>
       <li><a href="#" id="contacto-btn">Contacto</a></li>
-      <li><a href="#" id="carrito-btn">Carrito</a></li>
     </ul>
-    <!-- Icono del carrito -->
-    <div class="cart">
+    <!-- Icono del carrito en la esquina superior izquierda -->
+    <div class="cart" id="carrito-btn">
       <a href="#">🛒</a>
     </div>
   </nav>
@@ -170,7 +171,7 @@
     <p>Tu tienda de ropa táctica de confianza.</p>
   </header>
 
-  <section class="products">
+ <section class="products">
     <!-- Productos 1 al 15 -->
     <div class="product">
       <div class="image-container">
@@ -385,6 +386,12 @@
         e.preventDefault();
         console.log("Clic en carrito");
         toggleElemento('mensaje-carrito');
+      });
+
+      document.getElementById('inicio-btn').addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("Clic en inicio");
+        // Aquí puedes agregar la acción para el botón de "Inicio", si es necesario.
       });
 
       function toggleElemento(id) {
