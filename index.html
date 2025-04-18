@@ -17,6 +17,7 @@
       background-color: #000;
       padding: 10px 0;
       text-align: center;
+      position: relative;
     }
     .navbar ul {
       list-style: none;
@@ -32,6 +33,19 @@
       font-weight: 600;
       font-size: 18px;
     }
+    /* Estilos para el carrito */
+    .cart {
+      position: absolute;
+      left: 20px;
+      top: 10px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .cart:hover {
+      color: #908072; /* color gris topo cuando pasa el mouse */
+    }
+
     header {
       text-align: center;
       padding: 100px 20px 40px;
@@ -124,6 +138,10 @@
       <li><a href="#">Productos</a></li>
       <li><a href="#">Contacto</a></li>
     </ul>
+    <!-- Icono del carrito -->
+    <div class="cart">
+      <a href="#">🛒</a>
+    </div>
   </nav>
 
   <header>
