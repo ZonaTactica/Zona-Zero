@@ -372,7 +372,7 @@
     </div>
     <h2>Borcegos Magnum</h2>
     <p class="price">ARS $150.000</p>
-<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000">
+<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
   Agregar al carrito
 </button>
 
@@ -388,7 +388,7 @@
     </div>
     <h2>Campera Táctica</h2>
     <p class="price">ARS $200.000</p>
-<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000">
+<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000" data-stock="5">
   Agregar al carrito
 </button>
 
@@ -508,6 +508,17 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
   boton.addEventListener('click', () => {
     const nombre = boton.getAttribute('data-name');
     const precio = parseFloat(boton.getAttribute('data-price'));
+
+    // Verificar stock antes de agregar
+    const cantidadEnCarrito = carrito.filter(p => p.nombre === nombre).length;
+    if (cantidadEnCarrito < stock) {
+      carrito.push({ nombre, precio });
+      actualizarCarrito();
+    } else {
+      alert("No hay más stock disponible de este producto.");
+    }
+  });
+});
 
 // Botón Finalizar Compra
 document.getElementById('finalizar-compra').addEventListener('click', () => {
