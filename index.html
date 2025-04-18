@@ -21,7 +21,7 @@
       text-align: center;
       position: relative;
       display: flex;
-      justify-content: space-around; /* Alinea los elementos en línea horizontalmente */
+      justify-content: space-around;
       align-items: center;
     }
 
@@ -453,6 +453,15 @@
       function stopCarousel(product) {
         clearInterval(product._carouselInterval); // Detener carrusel cuando el mouse se va
       }
+
+      // Inicialización del carrusel para los productos
+      const products = document.querySelectorAll('.product');
+      products.forEach(product => {
+        startCarousel(product);
+
+        product.addEventListener('mouseenter', () => stopCarousel(product));
+        product.addEventListener('mouseleave', () => startCarousel(product));
+      });
     });
   </script>
 </body>
