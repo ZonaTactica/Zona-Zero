@@ -480,7 +480,7 @@
   });
 // ========== FUNCIONALIDAD DE CARRITO ==========
 
-const carrito = [];
+const carrito = JSON.parse(localStorage.getItem('carrito')) || []; // Cargar carrito desde localStorage
 const cartItems = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
 
@@ -499,6 +499,9 @@ function actualizarCarrito() {
   });
 
   cartTotal.textContent = `Total: ARS $${total.toLocaleString()}`;
+
+  // Guardar carrito en localStorage
+  localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
 function eliminarDelCarrito(index) {
@@ -545,9 +548,12 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
 
   if (confirm(resumen)) {
     alert("¡Gracias por tu compra! Te contactaremos por WhatsApp o mail para coordinar el pago.");
-    carrito.length = 0;
-    actualizarCarrito();
+    carrito.length = 0; // Limpiar el carrito después de la compra
+    actualizarCarrito(); // Actualizar la interfaz
   }
 });
+
+// Cargar el carrito al inicio
+actualizarCarrito();
 
 </script>
