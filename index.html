@@ -38,6 +38,27 @@
       color: #fff;
       font-weight: 600;
       font-size: 18px;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Efecto de rayas debajo de cada palabra */
+    .navbar a:before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+
+    .navbar a:hover:before {
+      transform: scaleX(1);
+      transform-origin: bottom left;
     }
 
     /* Icono del carrito */
@@ -112,20 +133,28 @@
       display: none;
     }
 
-    /* Mejorar el estilo del filtro de productos */
-    .filtro ul {
-      list-style-type: none;
-      padding: 0;
+    /* Cuadros flotantes de productos y contacto */
+    .cuadro {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+      top: 60px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s, top 0.5s ease-in-out, visibility 0s linear 0.5s;
     }
 
-    .filtro li {
-      margin-bottom: 10px;
-    }
-
-    .filtro a {
-      color: #333;
-      font-weight: bold;
-      text-decoration: none;
+    .cuadro.mostrar {
+      opacity: 1;
+      visibility: visible;
+      top: 120px;
+      transition: opacity 0.5s, top 0.5s ease-in-out;
     }
 
   </style>
@@ -337,7 +366,6 @@
       <h2>Campera Táctica</h2>
       <p class="price">150.000 Ars</p>
     </div>
-
   </section>
 
   <script>
@@ -396,7 +424,7 @@
 
       function toggleElemento(id) {
         const elemento = document.getElementById(id);
-        elemento.classList.toggle('oculto');
+        elemento.classList.toggle('mostrar');
       }
     });
   </script>
