@@ -368,65 +368,77 @@
     </div>
   </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Activar el carrusel de imágenes
-      const products = document.querySelectorAll(".product");
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Activar el carrusel de imágenes
+    const products = document.querySelectorAll(".product");
 
-      products.forEach(product => {
-        const images = product.querySelectorAll(".image-container img");
-        let current = 0;
-        let interval;
+    products.forEach(product => {
+      const images = product.querySelectorAll(".image-container img");
+      let current = 0;
+      let interval;
 
-        function startCarousel() {
-          interval = setInterval(() => {
-            images.forEach((img, index) => {
-              img.classList.remove("active");
-              if (index === current) img.classList.add("active");
-            });
-            current = (current + 1) % images.length;
-          }, 2000);
-        }
-
-        function stopCarousel() {
-          clearInterval(interval);
-        }
-
-        product.addEventListener("mouseenter", startCarousel);
-        product.addEventListener("mouseleave", stopCarousel);
-      });
-
-      // Funcionalidad de los botones
-      console.log("Esperando clics...");
-      document.getElementById('productos-btn').addEventListener('click', function (e) {
-        e.preventDefault();
-        console.log("Clic en productos");
-        toggleElemento('filtro-productos');
-      });
-
-      document.getElementById('contacto-btn').addEventListener('click', function (e) {
-        e.preventDefault();
-        console.log("Clic en contacto");
-        toggleElemento('cuadro-contacto');
-      });
-
-      document.getElementById('carrito-btn').addEventListener('click', function (e) {
-        e.preventDefault();
-        console.log("Clic en carrito");
-        toggleElemento('mensaje-carrito');
-      });
-
-      document.getElementById('inicio-btn').addEventListener('click', function (e) {
-        e.preventDefault();
-        console.log("Clic en inicio");
-        // Aquí puedes agregar la acción para el botón de "Inicio", si es necesario.
-      });
-
-      function toggleElemento(id) {
-        const elemento = document.getElementById(id);
-        elemento.classList.toggle('mostrar');
+      function startCarousel() {
+        interval = setInterval(() => {
+          images.forEach((img, index) => {
+            img.classList.remove("active");
+            if (index === current) img.classList.add("active");
+          });
+          current = (current + 1) % images.length;
+        }, 2000);
       }
+
+      function stopCarousel() {
+        clearInterval(interval);
+      }
+
+      product.addEventListener("mouseenter", startCarousel);
+      product.addEventListener("mouseleave", stopCarousel);
     });
-  </script>
+
+    // Mostrar y ocultar al pasar el mouse
+    configurarHover('productos-btn', 'filtro-productos');
+    configurarHover('contacto-btn', 'cuadro-contacto');
+    configurarHover('carrito-btn', 'mensaje-carrito');
+
+    function configurarHover(botonId, cuadroId) {
+      const boton = document.getElementById(botonId);
+      const cuadro = document.getElementById(cuadroId);
+
+      // Mostrar al pasar el mouse sobre el botón
+      boton.addEventListener('mouseenter', () => {
+        cuadro.classList.add('mostrar');
+      });
+
+      // Ocultar al salir del cuadro o del botón
+      boton.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          if (!cuadro.matches(':hover') && !boton.matches(':hover')) {
+            cuadro.classList.remove('mostrar');
+          }
+        }, 300);
+      });
+
+      cuadro.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          if (!cuadro.matches(':hover') && !boton.matches(':hover')) {
+            cuadro.classList.remove('mostrar');
+          }
+        }, 300);
+      });
+
+      cuadro.addEventListener('mouseenter', () => {
+        cuadro.classList.add('mostrar');
+      });
+    }
+
+    // Acción del botón "Inicio" si querés agregar algo más
+    document.getElementById('inicio-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      console.log("Clic en inicio");
+    });
+  });
+</script>
+
 </body>
 </html>
