@@ -399,22 +399,20 @@
       productos.classList.remove("oculto");
     });
 
-    btnProductos.addEventListener("mouseenter", (e) => {
-      e.preventDefault();
+    // Mostrar los elementos al pasar el mouse
+    btnProductos.addEventListener("mouseenter", () => {
       mostrarElemento(filtro);
     });
 
-    btnContacto.addEventListener("mouseenter", (e) => {
-      e.preventDefault();
+    btnContacto.addEventListener("mouseenter", () => {
       mostrarElemento(contacto);
     });
 
-    btnCarrito.addEventListener("mouseenter", (e) => {
-      e.preventDefault();
+    btnCarrito.addEventListener("mouseenter", () => {
       mostrarElemento(carrito);
     });
 
-    // Permitir mantener visible mientras el mouse esté sobre el elemento
+    // Se debe ocultar el contenido solo si el mouse sale de la zona correspondiente
     [filtro, contacto, carrito].forEach(el => {
       el.addEventListener("mouseleave", () => {
         el.classList.remove("visible");
