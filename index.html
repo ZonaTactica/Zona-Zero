@@ -508,7 +508,6 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
   boton.addEventListener('click', () => {
     const nombre = boton.getAttribute('data-name');
     const precio = parseFloat(boton.getAttribute('data-price'));
-    const stock = parseInt(boton.getAttribute('data-stock'));
 
 // Botón Finalizar Compra
 document.getElementById('finalizar-compra').addEventListener('click', () => {
