@@ -535,26 +535,6 @@ function actualizarStock() {
   });
 }
 
-document.querySelectorAll('.add-to-cart').forEach(boton => {
-  boton.addEventListener('click', (event) => {
-    const nombre = event.target.getAttribute('data-name');
-    const precio = parseFloat(event.target.getAttribute('data-price'));
-    const index = event.target.getAttribute('data-index');
-    const stock = productos[index].stock;
-
-    // Verificar stock antes de agregar
-    const cantidadEnCarrito = carrito.filter(p => p.nombre === nombre).length;
-    const stockRestante = stock - cantidadEnCarrito;
-
-    if (stockRestante > 0) {
-      carrito.push({ nombre, precio });
-      actualizarCarrito();
-    } else {
-      alert("No hay más stock disponible de este producto.");
-    }
-  });
-});
-
 // Botón Finalizar Compra
 document.getElementById('finalizar-compra').addEventListener('click', () => {
   if (carrito.length === 0) {
@@ -583,11 +563,12 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
   }
 });
 
-// Inicialización de los productos en la página
+// Cargar productos en la página (agregar solo productos definidos)
 function cargarProductos() {
   productos.forEach((producto, index) => {
     const div = document.createElement('div');
     div.id = `producto-${index}`;
+    div.classList.add('producto');
     div.innerHTML = `
       <h3>${producto.nombre}</h3>
       <p>Precio: ARS $${producto.precio}</p>
@@ -598,8 +579,29 @@ function cargarProductos() {
   });
 }
 
-// Cargar productos en la página cuando se carga el script
+// Llamar a cargar los productos en la página cuando cargue el script
 cargarProductos();
+
+// Asignar evento a cada botón de "Agregar al carrito"
+document.querySelectorAll('.add-to-cart').forEach(boton => {
+  boton.addEventListener('click', (event) => {
+    const nombre = event.target.getAttribute('data-name');
+    const precio = parseFloat(event.target.getAttribute('data-price'));
+    const index = event.target.getAttribute('data-index');
+    const stock = productos[index].stock;
+
+    // Verificar stock antes de agregar
+    const cantidadEnCarrito = carrito.filter(p => p.nombre === nombre).length;
+    const stockRestante = stock - cantidadEnCarrito;
+
+    if (stockRestante > 0) {
+      carrito.push({ nombre, precio });
+      actualizarCarrito();
+    } else {
+      alert("No hay más stock disponible de este producto.");
+    }
+  });
+});
 
 // Cargar carrito y estado de stock al inicio
 actualizarCarrito();
