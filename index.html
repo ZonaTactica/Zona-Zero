@@ -312,13 +312,14 @@
 
   <!-- Contenedor combinado con banner y título -->
   <div class="banner-container">
-    <h1 class="main-title">Zona Táctica</h1>
-    <div class="banner">
-      Equipos y accesorios de calidad para operaciones tácticas
-    </div>
+  <h1 class="main-title">Zona Táctica</h1>
+  <div class="banner">
+    Equipos y accesorios de calidad para operaciones tácticas
   </div>
+</div>
 
- <section class="products" id="productos">
+<section class="products" id="productos">
+  <!-- Producto 1: Borcegos -->
   <div class="product-card borcegos">
     <div class="image-container">
       <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active" />
@@ -328,9 +329,14 @@
     </div>
     <h2>Borcegos Magnum</h2>
     <p class="price">ARS $150.000</p>
+<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
+  Agregar al carrito
+</button>
+
   </div>
 
- <div class="product-card campera">
+  <!-- Producto 2: Campera -->
+  <div class="product-card campera">
     <div class="image-container">
       <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active" />
       <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2" />
@@ -339,15 +345,19 @@
     </div>
     <h2>Campera Táctica</h2>
     <p class="price">ARS $200.000</p>
+<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200.000" data-stock="5">
+  Agregar al carrito
+</button>
+
   </div>
+</section>
 
-  </section>
-
-  <footer id="contacto">
-    <p>Contacto: zonatactica@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
-  </footer>
+<footer id="contacto">
+  <p>Contacto: zonatactica@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
+</footer>
 
 <script>
+  // Carrusel de imágenes para productos
   document.querySelectorAll('.product-card').forEach(card => {
     const images = card.querySelectorAll('.image-container img');
     let currentIndex = 0;
@@ -384,5 +394,38 @@
         showImage(currentIndex);
       });
     });
+  });
+
+  // Función para filtrar productos por categoría
+  function filterProducts(category) {
+    const products = document.querySelectorAll('.product-card');
+    
+    if (category === "todos") {
+      products.forEach(product => {
+        product.style.display = "block";  // Mostrar todos los productos
+      });
+    } else {
+      products.forEach(product => {
+        if (product.classList.contains(category)) {
+          product.style.display = "block";  // Mostrar productos que coinciden
+        } else {
+          product.style.display = "none";  // Ocultar productos que no coinciden
+        }
+      });
+    }
+  }
+
+  // Llamar a esta función cada vez que se hace clic en un filtro
+  document.querySelectorAll('.dropdown-menu a').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const category = item.getAttribute('data-category');
+      filterProducts(category);
+    });
+  });
+
+  // Funcionalidad para INICIO: Mostrar todos los productos
+  document.querySelector('.nav-center a').addEventListener('click', () => {
+    filterProducts("todos"); // Mostrar todos los productos al hacer clic en INICIO
   });
 </script>
