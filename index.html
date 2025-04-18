@@ -40,6 +40,7 @@
       font-size: 18px;
       position: relative;
       display: inline-block;
+      padding: 10px 20px;
     }
 
     /* Efecto de rayas debajo de cada palabra */
@@ -61,18 +62,67 @@
       transform-origin: bottom left;
     }
 
-    /* Icono del carrito */
-    .cart {
+    /* Estilo común para los cuadros de productos, carrito y contacto */
+    .cuadro {
       position: absolute;
-      left: 20px;
-      top: 10px;
-      font-size: 24px;
-      color: #fff;
-      cursor: pointer;
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+      z-index: 999;
+      display: none;
+      width: 200px;
+      top: 60px;
     }
 
-    .cart:hover {
-      color: #908072;
+    /* Aparecer cuando el mouse está sobre el elemento */
+    .mostrar {
+      display: block;
+    }
+
+    /* Cuadro del carrito */
+    #mensaje-carrito {
+      left: 50%;
+      transform: translateX(-50%);
+      top: 90px;
+    }
+
+    /* Cuadro de contacto */
+    #cuadro-contacto {
+      left: 70%;
+      transform: translateX(-50%);
+      top: 90px;
+    }
+
+    /* Menú desplegable de productos */
+    #filtro-productos {
+      left: 20%;
+      transform: translateX(-50%);
+      top: 90px;
+      width: 200px;
+      background-color: #333;
+      padding: 10px;
+      position: absolute;
+      display: none;
+    }
+
+    #filtro-productos ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #fff;
+      text-align: center;
+    }
+
+    #filtro-productos ul li {
+      margin: 10px 0;
+    }
+
+    #filtro-productos ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
     }
 
     header {
@@ -128,63 +178,6 @@
     .image-container img.active {
       opacity: 1;
     }
-
-    /* Estilos para los cuadros ocultos */
-    .oculto {
-      display: none;
-    }
-
-    /* Cuadros flotantes de productos y contacto */
-    .cuadro {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      width: 80%;
-      max-width: 400px;
-      top: 60px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s, top 0.5s ease-in-out, visibility 0s linear 0.5s;
-    }
-
-    .cuadro.mostrar {
-      opacity: 1;
-      visibility: visible;
-      top: 120px;
-      transition: opacity 0.5s, top 0.5s ease-in-out;
-    }
-
-    #filtro-productos {
-      position: absolute;
-      top: 50px;
-      left: 0;
-      width: 100%;
-      background-color: #333;
-      padding: 10px;
-      display: none;
-    }
-
-    #filtro-productos ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      color: #fff;
-      text-align: center;
-    }
-
-    #filtro-productos ul li {
-      margin: 10px 0;
-    }
-
-    #filtro-productos ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 18px;
-    }
   </style>
 </head>
 <body>
@@ -214,12 +207,12 @@
   </div>
 
   <!-- Cuadro de contacto -->
-  <div id="cuadro-contacto" class="cuadro oculto">
+  <div id="cuadro-contacto" class="cuadro">
     <p>📧 <strong>Correo:</strong> zonatactica02@gmail.com</p>
   </div>
 
   <!-- Mensaje de carrito -->
-  <div id="mensaje-carrito" class="cuadro oculto">
+  <div id="mensaje-carrito" class="cuadro">
     <p>🛒 Tu carrito está vacío por ahora.</p>
   </div>
 
@@ -426,6 +419,7 @@
       });
 
       btnProductos.addEventListener("mouseleave", () => {
+        // El menú de productos permanece visible mientras el mouse está sobre él
         filtro.style.display = 'none'; // Ocultar el menú de productos cuando el mouse se va
       });
 
