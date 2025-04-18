@@ -312,6 +312,23 @@
   border-radius: 8px;
   cursor: pointer;
 }
+<style>
+  /* Añadir una clase para ocultar el carrito */
+  .cart-container.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  // Seleccionar el icono del carrito y el contenedor del carrito
+  const carritoIcono = document.querySelector('.nav-left i');
+  const contenedorCarrito = document.getElementById('carrito');
+
+  // Evento para mostrar/ocultar el carrito
+  carritoIcono.addEventListener('click', () => {
+    contenedorCarrito.classList.toggle('hidden');
+  });
+</script>
 
   </style>
 </head>
