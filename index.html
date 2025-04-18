@@ -24,10 +24,12 @@
       display: flex;
       align-items: center;
       justify-content: center; /* Centrado de los enlaces */
+      position: relative; /* Necesario para el carrito */
     }
 
     .nav-left {
-      flex: 0;
+      position: absolute;
+      left: 20px; /* Carrito en la esquina superior izquierda */
     }
 
     .nav-left i {
