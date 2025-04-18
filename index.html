@@ -237,6 +237,7 @@
   z-index: 99;
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
+pointer-events: none;
 }
 
 .dropdown-menu a {
@@ -252,10 +253,12 @@
   background-color: #555;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
   display: block;
   transform: translateX(-50%) scaleY(1);
   opacity: 1;
+  pointer-events: auto;
 }
 
   </style>
