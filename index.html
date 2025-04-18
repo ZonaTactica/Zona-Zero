@@ -87,6 +87,12 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       padding: 15px;
       text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de zoom y sombra */
+    }
+
+    .product-card:hover {
+      transform: scale(1.05); /* Zoom suave */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Sombra */
     }
 
     .product-card img {
@@ -178,19 +184,22 @@
     // Carrusel: cambiar las imágenes de los productos
     const productImages = document.querySelectorAll('.image-container img');
     let currentImageIndex = 0; // Empezamos con la primera imagen
+    let isMouseOver = false; // Variable para controlar si el mouse está sobre la imagen
 
     function changeImage() {
-      // Remover la clase 'active' de la imagen actual
-      productImages[currentImageIndex].classList.remove('active');
-      
-      // Incrementar el índice y asegurarnos de que no pase del total de imágenes
-      currentImageIndex = (currentImageIndex + 1) % productImages.length;
-      
-      // Añadir la clase 'active' a la siguiente imagen
-      productImages[currentImageIndex].classList.add('active');
+      if (isMouseOver) {
+        // Remover la clase 'active' de la imagen actual
+        productImages[currentImageIndex].classList.remove('active');
+        
+        // Incrementar el índice y asegurarnos de que no pase del total de imágenes
+        currentImageIndex = (currentImageIndex + 1) % productImages.length;
+        
+        // Añadir la clase 'active' a la siguiente imagen
+        productImages[currentImageIndex].classList.add('active');
+      }
     }
 
-    // Cambiar imagen cada 3 segundos (3000 milisegundos)
+    // Cambiar imagen cada 3 segundos solo si el mouse está sobre la imagen
     setInterval(changeImage, 3000);
 
     // Permitir el cambio de imagen al hacer clic (opcional)
@@ -198,6 +207,17 @@
       img.addEventListener('click', () => {
         productImages.forEach(i => i.classList.remove('active'));
         img.classList.add('active');
+      });
+    });
+
+    // Detectar cuando el mouse entra y sale de la imagen
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        isMouseOver = true; // El mouse está sobre la imagen
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isMouseOver = false; // El mouse ha salido de la imagen
       });
     });
   </script>
