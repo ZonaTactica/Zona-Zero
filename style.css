@@ -17,15 +17,15 @@
       color: white;
       padding: 20px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
 
     nav {
       display: flex;
       justify-content: center;
       background-color: #333;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     nav a {
@@ -87,6 +87,7 @@
     }
 
     .filtro.visible {
+      display: block;
       opacity: 1;
       transform: translateY(0);
     }
@@ -177,16 +178,31 @@
         contacto.classList.add("oculto");
       }
 
-      function mostrarContacto() {
-        filtro.classList.add("oculto");
+      function ocultarFiltro() {
         filtro.classList.remove("visible");
+        setTimeout(() => filtro.classList.add("oculto"), 400);
+      }
+
+      function mostrarContacto() {
+        ocultarFiltro();
         productos.classList.add("oculto");
         contacto.classList.remove("oculto");
       }
 
-      btnInicio.addEventListener("click", mostrarInicio);
-      btnProductos.addEventListener("mouseover", mostrarFiltro);
-      btnContacto.addEventListener("mouseover", mostrarContacto);
+      btnInicio.addEventListener("click", (e) => {
+        e.preventDefault();
+        mostrarInicio();
+      });
+
+      btnProductos.addEventListener("mouseover", (e) => {
+        e.preventDefault();
+        mostrarFiltro();
+      });
+
+      btnContacto.addEventListener("mouseover", (e) => {
+        e.preventDefault();
+        mostrarContacto();
+      });
 
       const filtroItems = document.querySelectorAll(".filtro-item");
       const todosLosProductos = document.querySelectorAll(".product");
@@ -195,8 +211,7 @@
         item.addEventListener("click", (e) => {
           e.preventDefault();
           const categoria = item.getAttribute("data-categoria");
-          filtro.classList.add("oculto");
-          filtro.classList.remove("visible");
+          ocultarFiltro();
           if (categoria === "todos") {
             todosLosProductos.forEach(prod => prod.style.display = "block");
           } else {
