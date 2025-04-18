@@ -14,7 +14,6 @@
       color: #333;
     }
 
-    /* Barra de navegación */
     .navbar {
       background-color: #000;
       padding: 10px 0;
@@ -43,7 +42,6 @@
       padding: 10px 20px;
     }
 
-    /* Efecto de rayas debajo de cada palabra */
     .navbar a:before {
       content: "-";
       position: absolute;
@@ -60,69 +58,6 @@
     .navbar a:hover:before {
       transform: scaleX(1);
       transform-origin: bottom left;
-    }
-
-    /* Estilo común para los cuadros de productos, carrito y contacto */
-    .cuadro {
-      position: absolute;
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      border-radius: 5px;
-      z-index: 999;
-      display: none;
-      width: 200px;
-      top: 60px;
-    }
-
-    /* Aparecer cuando el mouse está sobre el elemento */
-    .mostrar {
-      display: block;
-    }
-
-    /* Cuadro del carrito */
-    #mensaje-carrito {
-      left: 50%;
-      transform: translateX(-50%);
-      top: 90px;
-    }
-
-    /* Cuadro de contacto */
-    #cuadro-contacto {
-      left: 70%;
-      transform: translateX(-50%);
-      top: 90px;
-    }
-
-    /* Menú desplegable de productos */
-    #filtro-productos {
-      left: 20%;
-      transform: translateX(-50%);
-      top: 90px;
-      width: 200px;
-      background-color: #333;
-      padding: 10px;
-      position: absolute;
-      display: none;
-    }
-
-    #filtro-productos ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      color: #fff;
-      text-align: center;
-    }
-
-    #filtro-productos ul li {
-      margin: 10px 0;
-    }
-
-    #filtro-productos ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
     }
 
     header {
@@ -178,47 +113,45 @@
     .image-container img.active {
       opacity: 1;
     }
+
+    .carousel-controls {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 10px;
+      display: none;
+    }
+
+    .product:hover .carousel-controls {
+      display: flex;
+    }
+
+    .carousel-controls button {
+      background-color: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
-  <!-- Barra de navegación -->
-  <nav class="navbar">
-    <ul>
-      <li><a href="#" id="inicio-btn">Inicio</a></li>
-      <li><a href="#" id="productos-btn">Productos</a></li>
-      <li><a href="#" id="contacto-btn">Contacto</a></li>
-    </ul>
-    <!-- Icono del carrito en la esquina superior izquierda -->
-    <div class="cart" id="carrito-btn">
-      <a href="#">🛒</a>
-    </div>
-  </nav>
-
-  <!-- Menú desplegable de productos -->
-  <div id="filtro-productos">
-    <ul>
-      <li><a href="#">Camperas</a></li>
-      <li><a href="#">Borcegos</a></li>
-      <li><a href="#">Cinturones</a></li>
-      <li><a href="#">Morrales</a></li>
-      <li><a href="#">Mochilas</a></li>
-      <li><a href="#">Elementos</a></li>
-    </ul>
-  </div>
-
-  <!-- Cuadro de contacto -->
-  <div id="cuadro-contacto" class="cuadro">
-    <p>📧 <strong>Correo:</strong> zonatactica02@gmail.com</p>
-  </div>
-
-  <!-- Mensaje de carrito -->
-  <div id="mensaje-carrito" class="cuadro">
-    <p>🛒 Tu carrito está vacío por ahora.</p>
-  </div>
-
   <header>
     <h1>Zona Táctica</h1>
-    <p>Tu tienda de ropa táctica de confianza.</p>
   </header>
 
  <section class="products">
@@ -389,80 +322,28 @@
     </div>
   </section>
 
+  <footer>
+    &copy; 2025 Zona Táctica. Todos los derechos reservados.
+  </footer>
+
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const btnInicio = document.getElementById("inicio-btn");
-      const btnProductos = document.getElementById("productos-btn");
-      const btnContacto = document.getElementById("contacto-btn");
-      const btnCarrito = document.getElementById("carrito-btn");
+    function nextImage(btn) {
+      const container = btn.closest('.image-container');
+      const images = container.querySelectorAll('img');
+      const current = Array.from(images).findIndex(img => img.classList.contains('active'));
+      images[current].classList.remove('active');
+      const nextIndex = (current + 1) % images.length;
+      images[nextIndex].classList.add('active');
+    }
 
-      const filtro = document.getElementById("filtro-productos");
-      const contacto = document.getElementById("cuadro-contacto");
-      const carrito = document.getElementById("mensaje-carrito");
-
-      function ocultarTodo() {
-        [filtro, contacto, carrito].forEach(el => {
-          el.classList.remove("mostrar");
-          el.classList.add("oculto");
-        });
-      }
-
-      function mostrarElemento(elemento) {
-        ocultarTodo();
-        elemento.classList.remove("oculto");
-        setTimeout(() => elemento.classList.add("mostrar"), 10);
-      }
-
-      // Hover sobre el menú
-      btnProductos.addEventListener("mouseenter", () => {
-        filtro.style.display = 'block'; // Mostrar el menú de productos
-      });
-
-      btnProductos.addEventListener("mouseleave", () => {
-        // El menú de productos permanece visible mientras el mouse está sobre él
-        filtro.style.display = 'none'; // Ocultar el menú de productos cuando el mouse se va
-      });
-
-      btnContacto.addEventListener("mouseenter", () => {
-        mostrarElemento(contacto);
-      });
-
-      btnCarrito.addEventListener("mouseenter", () => {
-        mostrarElemento(carrito);
-      });
-
-      // Hover fuera del menú
-      [contacto, carrito].forEach(el => {
-        el.addEventListener("mouseleave", () => {
-          el.classList.remove("mostrar");
-          el.classList.add("oculto");
-        });
-      });
-
-      // Control de imágenes del producto (carrusel)
-      function startCarousel(product) {
-        const images = product.querySelectorAll('.image-container img');
-        let activeIndex = 0;
-        product._carouselInterval = setInterval(() => {
-          images[activeIndex].classList.remove('active');
-          activeIndex = (activeIndex + 1) % images.length;
-          images[activeIndex].classList.add('active');
-        }, 3000); // Cambia la imagen cada 3 segundos
-      }
-
-      function stopCarousel(product) {
-        clearInterval(product._carouselInterval); // Detener carrusel cuando el mouse se va
-      }
-
-      // Inicialización del carrusel para los productos
-      const products = document.querySelectorAll('.product');
-      products.forEach(product => {
-        startCarousel(product);
-
-        product.addEventListener('mouseenter', () => stopCarousel(product));
-        product.addEventListener('mouseleave', () => startCarousel(product));
-      });
-    });
+    function prevImage(btn) {
+      const container = btn.closest('.image-container');
+      const images = container.querySelectorAll('img');
+      const current = Array.from(images).findIndex(img => img.classList.contains('active'));
+      images[current].classList.remove('active');
+      const prevIndex = (current - 1 + images.length) % images.length;
+      images[prevIndex].classList.add('active');
+    }
   </script>
 </body>
 </html>
