@@ -21,7 +21,7 @@
       text-align: center;
       position: relative;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-around; /* Alinea los elementos en línea horizontalmente */
       align-items: center;
     }
 
@@ -99,6 +99,7 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
+      position: relative;
     }
 
     .product:hover {
@@ -156,6 +157,7 @@
       top: 120px;
       transition: opacity 0.5s, top 0.5s ease-in-out;
     }
+
   </style>
 </head>
 <body>
@@ -172,6 +174,18 @@
     </div>
   </nav>
 
+  <!-- Menú desplegable de productos -->
+  <div id="filtro-productos" class="filtro oculto">
+    <ul>
+      <li><a href="#">Camperas</a></li>
+      <li><a href="#">Borcegos</a></li>
+      <li><a href="#">Cinturones</a></li>
+      <li><a href="#">Morrales</a></li>
+      <li><a href="#">Mochilas</a></li>
+      <li><a href="#">Elementos</a></li>
+    </ul>
+  </div>
+
   <!-- Cuadro de contacto -->
   <div id="cuadro-contacto" class="cuadro oculto">
     <p>📧 <strong>Correo:</strong> zonatactica02@gmail.com</p>
@@ -187,7 +201,7 @@
     <p>Tu tienda de ropa táctica de confianza.</p>
   </header>
 
-   <section class="products">
+ <section class="products">
     <!-- Productos 1 al 15 -->
     <div class="product">
       <div class="image-container">
@@ -355,56 +369,63 @@
     </div>
   </section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const btnInicio = document.getElementById("inicio-btn");
-    const btnProductos = document.getElementById("productos-btn");
-    const btnContacto = document.getElementById("contacto-btn");
-    const btnCarrito = document.getElementById("carrito-btn");
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btnInicio = document.getElementById("inicio-btn");
+      const btnProductos = document.getElementById("productos-btn");
+      const btnContacto = document.getElementById("contacto-btn");
+      const btnCarrito = document.getElementById("carrito-btn");
 
-    const filtro = document.getElementById("filtro-productos");
-    const productos = document.getElementById("productos");
-    const contacto = document.getElementById("contacto");
-    const carrito = document.getElementById("mensaje-carrito");
+      const filtro = document.getElementById("filtro-productos");
+      const contacto = document.getElementById("cuadro-contacto");
+      const carrito = document.getElementById("mensaje-carrito");
 
-    function ocultarTodo() {
+      function ocultarTodo() {
+        [filtro, contacto, carrito].forEach(el => {
+          el.classList.remove("mostrar");
+          el.classList.add("oculto");
+        });
+      }
+
+      function mostrarElemento(elemento) {
+        ocultarTodo();
+        elemento.classList.remove("oculto");
+        setTimeout(() => elemento.classList.add("mostrar"), 10);
+      }
+
+      // Hover sobre el menú
+      btnProductos.addEventListener("mouseenter", () => {
+        mostrarElemento(filtro);
+      });
+
+      btnContacto.addEventListener("mouseenter", () => {
+        mostrarElemento(contacto);
+      });
+
+      btnCarrito.addEventListener("mouseenter", () => {
+        mostrarElemento(carrito);
+      });
+
+      // Hover fuera del menú
       [filtro, contacto, carrito].forEach(el => {
-        el.classList.remove("visible");
-        el.classList.add("oculto");
+        el.addEventListener("mouseleave", () => {
+          el.classList.remove("mostrar");
+          el.classList.add("oculto");
+        });
       });
-    }
 
-    function mostrarElemento(elemento) {
-      ocultarTodo();
-      elemento.classList.remove("oculto");
-      setTimeout(() => elemento.classList.add("visible"), 10);
-    }
-
-    btnInicio.addEventListener("click", (e) => {
-      e.preventDefault();
-      ocultarTodo();
-      productos.classList.remove("oculto");
-    });
-
-    btnProductos.addEventListener("mouseenter", () => {
-      mostrarElemento(filtro);
-    });
-
-    btnContacto.addEventListener("mouseenter", () => {
-      mostrarElemento(contacto);
-    });
-
-    btnCarrito.addEventListener("mouseenter", () => {
-      mostrarElemento(carrito);
-    });
-
-    [filtro, contacto, carrito].forEach(el => {
-      el.addEventListener("mouseleave", () => {
-        el.classList.remove("visible");
-        el.classList.add("oculto");
+      // Control de imágenes del producto (carrusel)
+      const imageContainers = document.querySelectorAll('.image-container');
+      imageContainers.forEach(container => {
+        const images = container.querySelectorAll('img');
+        let activeIndex = 0;
+        setInterval(() => {
+          images[activeIndex].classList.remove('active');
+          activeIndex = (activeIndex + 1) % images.length;
+          images[activeIndex].classList.add('active');
+        }, 3000); // Cambia la imagen cada 3 segundos
       });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
