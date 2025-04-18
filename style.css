@@ -1,103 +1,103 @@
+/* Estilo general */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #ffffff;
-  color: #222222;
-  padding: 0;
+  background-color: #f8f8f8;
+  color: #333;
+  padding: 20px;
 }
 
 header {
-  background-color: #e0e0e0;  /* Fondo más claro */
-  padding: 60px 20px;  /* Espacio adicional para mover el texto hacia abajo */
+  background-color: #1f1f1f;
+  padding: 20px;
   text-align: center;
-  border-bottom: 1px solid #e0e0e0;
+  color: white;
 }
 
 h1 {
-  margin: 0;
   font-size: 36px;
-  color: #111;
+  margin: 0;
 }
 
-header p {
+p {
   font-size: 18px;
-  color: #555;
 }
 
+/* Barra de navegación */
 .navbar {
   background-color: #333;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  color: white;
   padding: 10px 0;
+  text-align: center;
 }
 
 .navbar ul {
-  list-style: none;
+  list-style-type: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .navbar ul li {
-  margin: 0 40px;
+  display: inline;
+  margin: 0 20px;
 }
 
 .navbar ul li a {
   text-decoration: none;
-  color: black;
-  font-size: 22px;
-  font-weight: 600;
-  padding: 15px;
-  transition: background-color 0.3s;
-}
-
-.navbar ul li a:hover {
-  background-color: #444;
   color: white;
+  font-size: 18px;
 }
 
+/* Estilo para la sección de productos */
 .products {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 80px 20px 40px;
-  justify-content: center;
+  margin-top: 30px;
 }
 
 .product {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background-color: white;
+  padding: 15px;
   border-radius: 10px;
-  width: 220px;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
 }
 
 .product:hover {
-  transform: translateY(-5px);
-}
-
-.product img {
-  width: 100%;
-  height: auto;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  transform: translateY(-10px); /* Sube ligeramente cuando se pasa el mouse */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .product h2 {
-  font-size: 18px;
-  margin: 10px 0 5px;
-  color: #333;
+  font-size: 20px;
+  margin: 10px 0;
 }
 
 .product .price {
   font-size: 16px;
-  color: #777;
-  margin-bottom: 15px;
+  color: #007BFF;
+}
+
+/* Contenedor de las imágenes */
+.product-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.product-images img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  opacity: 0; /* Inicialmente invisibles */
+  transition: opacity 0.5s ease;
+}
+
+/* Efecto para hacer visibles las imágenes al pasar el mouse */
+.product:hover .product-images img {
+  opacity: 1; /* Se vuelven visibles cuando se pasa el mouse sobre el producto */
 }
