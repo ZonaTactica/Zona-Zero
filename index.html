@@ -602,4 +602,66 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
   actualizarCarrito();
 });
 
+<script>
+  // ... el código anterior continúa
+
+  const carrito = [];
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+
+  function actualizarCarrito() {
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    carrito.forEach((item, index) => {
+      total += item.precio * item.cantidad;
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${item.nombre} x${item.cantidad} - ARS $${(item.precio * item.cantidad).toLocaleString()}
+        <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer;">🗑</button>
+      `;
+      cartItems.appendChild(li);
+    });
+
+    cartTotal.textContent = `Total: ARS $${total.toLocaleString()}`;
+  }
+
+  function eliminarDelCarrito(index) {
+    carrito.splice(index, 1);
+    actualizarCarrito();
+  }
+
+  function agregarAlCarrito(id, nombre, precio, stock) {
+    const existente = carrito.find(item => item.id === id);
+    if (existente) {
+      if (existente.cantidad < stock) {
+        existente.cantidad++;
+      } else {
+        alert("No hay más stock disponible.");
+      }
+    } else {
+      carrito.push({ id, nombre, precio, cantidad: 1 });
+    }
+    actualizarCarrito();
+  }
+
+  document.querySelectorAll(".add-to-cart").forEach(boton => {
+    boton.addEventListener("click", () => {
+      const id = boton.getAttribute("data-id");
+      const nombre = boton.getAttribute("data-name");
+      const precio = parseFloat(boton.getAttribute("data-price"));
+      const stock = parseInt(boton.getAttribute("data-stock"));
+      agregarAlCarrito(id, nombre, precio, stock);
+    });
+  });
+
+  document.getElementById("finalizar-compra").addEventListener("click", () => {
+    if (carrito.length === 0) {
+      alert("Tu carrito está vacío.");
+      return;
+    }
+    alert("Gracias por tu compra. Nos pondremos en contacto para coordinar el pago.");
+    carrito.length = 0; // Vacía el carrito
+    actualizarCarrito();
+  });
 </script>
