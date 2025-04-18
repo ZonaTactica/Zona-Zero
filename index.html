@@ -477,102 +477,78 @@
   document.querySelector('.nav-center a').addEventListener('click', () => {
     filterProducts("todos"); // Mostrar todos los productos al hacer clic en INICIO
   });
+
 <script>
   const productos = [
-    {
-      id: 1,
-      nombre: "Pantalón Táctico",
-      precio: 15000,
-      stock: 5
-    },
-    {
-      id: 2,
-      nombre: "Borceguí Militar",
-      precio: 30000,
-      stock: 2
-    },
-    {
-      id: 3,
-      nombre: "Campera Táctica",
-      precio: 28000,
-      stock: 0
-    }
+    { id: 1, nombre: "Borcegos", precio: 150000 },
+    { id: 2, nombre: "Campera Táctica", precio: 200000 },
+    { id: 3, nombre: "Campera Impermeable", precio: 32000 },
   ];
 
-  let carrito = [];
+  const carrito = [];
+
+  const contenedorProductos = document.getElementById("productos");
+  const carritoItems = document.getElementById("cart-items");
+  const carritoTotal = document.getElementById("cart-total");
+  const finalizarCompraBtn = document.getElementById("finalizar-compra");
+
+  // Mostrar productos
+  productos.forEach(prod => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <h3>${prod.nombre}</h3>
+      <p>Precio: ARS $${prod.precio}</p>
+      <button onclick="agregarAlCarrito(${prod.id})">Agregar al carrito</button>
+    `;
+    contenedorProductos.appendChild(div);
+  });
 
   function agregarAlCarrito(id) {
     const producto = productos.find(p => p.id === id);
-    if (!producto || producto.stock <= 0) {
-      alert("Este producto está sin stock.");
-      return;
-    }
-
     const enCarrito = carrito.find(p => p.id === id);
 
     if (enCarrito) {
-      if (enCarrito.cantidad < producto.stock) {
-        enCarrito.cantidad++;
-      } else {
-        alert("No hay más stock disponible.");
-      }
+      enCarrito.cantidad++;
     } else {
       carrito.push({ ...producto, cantidad: 1 });
     }
 
-    mostrarCarrito();
+    actualizarCarrito();
   }
 
   function eliminarDelCarrito(id) {
-    carrito = carrito.filter(p => p.id !== id);
-    mostrarCarrito();
+    const index = carrito.findIndex(p => p.id === id);
+    if (index !== -1) {
+      carrito.splice(index, 1);
+    }
+    actualizarCarrito();
   }
 
-  function mostrarCarrito() {
-    const contenedor = document.getElementById("carrito");
-    contenedor.innerHTML = "";
+  function actualizarCarrito() {
+    carritoItems.innerHTML = "";
+    let total = 0;
 
+    carrito.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${item.nombre} x${item.cantidad} - ARS $${item.precio * item.cantidad}
+        <button onclick="eliminarDelCarrito(${item.id})">Eliminar</button>
+      `;
+      carritoItems.appendChild(li);
+      total += item.precio * item.cantidad;
+    });
+
+    carritoTotal.textContent = `Total: ARS $${total}`;
+  }
+
+  finalizarCompraBtn.addEventListener("click", () => {
     if (carrito.length === 0) {
-      contenedor.innerHTML = "<p>Tu carrito está vacío.</p>";
+      alert("El carrito está vacío.");
       return;
     }
-
-    carrito.forEach(producto => {
-      const item = document.createElement("div");
-      item.className = "carrito-item";
-      item.innerHTML = `
-        <p>${producto.nombre} x${producto.cantidad}</p>
-        <p>$${producto.precio * producto.cantidad}</p>
-        <button onclick="eliminarDelCarrito(${producto.id})">Eliminar</button>
-      `;
-      contenedor.appendChild(item);
-    });
-
-    const total = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
-    const totalDiv = document.createElement("div");
-    totalDiv.innerHTML = `<strong>Total: $${total}</strong>`;
-    contenedor.appendChild(totalDiv);
-  }
-
-  function renderizarProductos() {
-    const contenedor = document.getElementById("productos");
-    productos.forEach(producto => {
-      const div = document.createElement("div");
-      div.className = "producto";
-      div.innerHTML = `
-        <h3>${producto.nombre}</h3>
-        <p>Precio: $${producto.precio}</p>
-        <p ${producto.stock === 0 ? 'style="color:red;"' : ""}>
-          ${producto.stock > 0 ? `Stock: ${producto.stock}` : "Sin stock"}
-        </p>
-        <button onclick="agregarAlCarrito(${producto.id})" ${producto.stock === 0 ? "disabled" : ""}>Agregar al carrito</button>
-      `;
-      contenedor.appendChild(div);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    renderizarProductos();
-    mostrarCarrito();
+    alert("¡Gracias por tu compra!");
+    carrito.length = 0;
+    actualizarCarrito();
   });
 </script>
+
