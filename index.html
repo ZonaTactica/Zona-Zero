@@ -139,6 +139,35 @@
       padding: 15px;
       margin-top: 40px;
     }
+.contacto-dropdown {
+  position: relative;
+}
+
+.contacto-link {
+  position: relative;
+  z-index: 2;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.contacto-dropdown:hover .dropdown-content,
+.dropdown-content:hover {
+  display: block;
+}
+
   </style>
 </head>
 <body>
@@ -150,7 +179,13 @@
     <nav class="nav-center">
       <a href="#">Inicio</a>
       <a href="#productos">Productos</a>
-      <a href="#contacto">Contacto</a>
+      <div class="contacto-dropdown">
+  <a href="#contacto" class="contacto-link">Contacto</a>
+  <div class="dropdown-content">
+    <p><strong>Correo:</strong> transportepuntacorral@yahoo.com.ar</p>
+    <p><strong>WhatsApp:</strong> +54 11-62873365</p>
+  </div>
+
     </nav>
   </header>
 
