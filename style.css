@@ -7,8 +7,8 @@ body {
 }
 
 header {
-  background-color: #f8f8f8;
-  padding: 40px 20px;
+  background-color: #e0e0e0;  /* Fondo más claro */
+  padding: 60px 20px;  /* Espacio adicional para mover el texto hacia abajo */
   text-align: center;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -50,22 +50,22 @@ header p {
 .navbar ul li a {
   text-decoration: none;
   color: black;
-  font-size: 22px;  /* Aumentamos el tamaño */
-  font-weight: 600;  /* Para hacerlo más grueso */
+  font-size: 22px;
+  font-weight: 600;
   padding: 15px;
   transition: background-color 0.3s;
 }
 
 .navbar ul li a:hover {
   background-color: #444;
-  color: white;  /* Cambio de color cuando se pasa el mouse */
+  color: white;
 }
 
 .products {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 80px 20px 40px; /* Espacio arriba para el navbar */
+  padding: 80px 20px 40px;
   justify-content: center;
 }
 
@@ -88,4 +88,16 @@ header p {
   height: auto;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.product h2 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.product .price {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 15px;
 }
