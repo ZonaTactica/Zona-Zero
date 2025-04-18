@@ -74,24 +74,31 @@
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
     }
-    .image-container img:first-child {
+    .image-container img.active {
       opacity: 1;
-    }
-    .product:hover .image-container img {
-      animation: slide 4s infinite;
-    }
-    @keyframes slide {
-      0% { opacity: 1; }
-      25% { opacity: 0; }
-      50% { opacity: 1; }
-      75% { opacity: 0; }
-      100% { opacity: 1; }
     }
     .product h2, .product .price {
       text-align: center;
       margin: 10px 0;
     }
   </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const products = document.querySelectorAll(".product");
+
+      products.forEach(product => {
+        const images = product.querySelectorAll(".image-container img");
+        let current = 0;
+        setInterval(() => {
+          images.forEach((img, index) => {
+            img.classList.remove("active");
+            if (index === current) img.classList.add("active");
+          });
+          current = (current + 1) % images.length;
+        }, 2000);
+      });
+    });
+  </script>
 </head>
 <body>
   <!-- Barra de navegación -->
@@ -108,192 +115,27 @@
     <p>Tu tienda de ropa táctica de confianza.</p>
   </header>
 
+  <section class="products">
+    <!-- Productos 1 al 15 -->
+    <!-- Cada producto tiene 4 imágenes -->
+    <!-- Puedes reemplazar las rutas y los nombres según tus productos reales -->
     
-    <!-- Botas Magnum -->
+    <!-- START productos -->
     <div class="product">
-      <div class="image-container">
-        <img src="img/producto1_1.jpg" alt="Botas Magnum">
-        <img src="img/producto1_2.jpg" alt="Botas Magnum">
-        <img src="img/producto1_3.jpg" alt="Botas Magnum">
-        <img src="img/producto1_4.jpg" alt="Botas Magnum">
+      ${Array.from({ length: 15 }, (_, i) => `
+      <div class="product">
+        <div class="image-container">
+          <img src="img/producto${i+1}_1.jpg" alt="Producto ${i+1} imagen 1" class="active">
+          <img src="img/producto${i+1}_2.jpg" alt="Producto ${i+1} imagen 2">
+          <img src="img/producto${i+1}_3.jpg" alt="Producto ${i+1} imagen 3">
+          <img src="img/producto${i+1}_4.jpg" alt="Producto ${i+1} imagen 4">
+        </div>
+        <h2>Producto ${i+1}</h2>
+        <p class="price">$${(12000 + i * 1000).toLocaleString('es-AR')}</p>
       </div>
-      <h2>Producto 1</h2>
-      <p class="price">$12.000</p>
+      `).join('')}
     </div>
-
- <!-- Producto 2 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1">
-        <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2">
-        <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3">
-        <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4">
-      </div>
-      <h2>Producto 2</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 3 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto3_1.jpg" alt="Producto 3 imagen 1">
-        <img src="img/producto3_2.jpg" alt="Producto 3 imagen 2">
-        <img src="img/producto3_3.jpg" alt="Producto 3 imagen 3">
-        <img src="img/producto3_4.jpg" alt="Producto 3 imagen 4">
-      </div>
-      <h2>Producto 3</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 4 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto4_1.jpg" alt="Producto 4 imagen 1">
-        <img src="img/producto4_2.jpg" alt="Producto 4 imagen 2">
-        <img src="img/producto4_3.jpg" alt="Producto 4 imagen 3">
-        <img src="img/producto4_4.jpg" alt="Producto 4 imagen 4">
-      </div>
-      <h2>Producto 4</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 5 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto5_1.jpg" alt="Producto 5 imagen 1">
-        <img src="img/producto5_2.jpg" alt="Producto 5 imagen 2">
-        <img src="img/producto5_3.jpg" alt="Producto 5 imagen 3">
-        <img src="img/producto5_4.jpg" alt="Producto 5 imagen 4">
-      </div>
-      <h2>Producto 5</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 6 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto6_1.jpg" alt="Producto 6 imagen 1">
-        <img src="img/producto6_2.jpg" alt="Producto 6 imagen 2">
-        <img src="img/producto6_3.jpg" alt="Producto 6 imagen 3">
-        <img src="img/producto6_4.jpg" alt="Producto 6 imagen 4">
-      </div>
-      <h2>Producto 6</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 7 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto7_1.jpg" alt="Producto 7 imagen 1">
-        <img src="img/producto7_2.jpg" alt="Producto 7 imagen 2">
-        <img src="img/producto7_3.jpg" alt="Producto 7 imagen 3">
-        <img src="img/producto7_4.jpg" alt="Producto 7 imagen 4">
-      </div>
-      <h2>Producto 7</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 8 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto8_1.jpg" alt="Producto 8 imagen 1">
-        <img src="img/producto8_2.jpg" alt="Producto 8 imagen 2">
-        <img src="img/producto8_3.jpg" alt="Producto 8 imagen 3">
-        <img src="img/producto8_4.jpg" alt="Producto 8 imagen 4">
-      </div>
-      <h2>Producto 8</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 9 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto9_1.jpg" alt="Producto 9 imagen 1">
-        <img src="img/producto9_2.jpg" alt="Producto 9 imagen 2">
-        <img src="img/producto9_3.jpg" alt="Producto 9 imagen 3">
-        <img src="img/producto9_4.jpg" alt="Producto 9 imagen 4">
-      </div>
-      <h2>Producto 9</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 10 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto10_1.jpg" alt="Producto 10 imagen 1">
-        <img src="img/producto10_2.jpg" alt="Producto 10 imagen 2">
-        <img src="img/producto10_3.jpg" alt="Producto 10 imagen 3">
-        <img src="img/producto10_4.jpg" alt="Producto 10 imagen 4">
-      </div>
-      <h2>Producto 10</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 11 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto11_1.jpg" alt="Producto 11 imagen 1">
-        <img src="img/producto11_2.jpg" alt="Producto 11 imagen 2">
-        <img src="img/producto11_3.jpg" alt="Producto 11 imagen 3">
-        <img src="img/producto11_4.jpg" alt="Producto 11 imagen 4">
-      </div>
-      <h2>Producto 11</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 12 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto12_1.jpg" alt="Producto 12 imagen 1">
-        <img src="img/producto12_2.jpg" alt="Producto 12 imagen 2">
-        <img src="img/producto12_3.jpg" alt="Producto 12 imagen 3">
-        <img src="img/producto12_4.jpg" alt="Producto 12 imagen 4">
-      </div>
-      <h2>Producto 12</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 13 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto13_1.jpg" alt="Producto 13 imagen 1">
-        <img src="img/producto13_2.jpg" alt="Producto 13 imagen 2">
-        <img src="img/producto13_3.jpg" alt="Producto 13 imagen 3">
-        <img src="img/producto13_4.jpg" alt="Producto 13 imagen 4">
-      </div>
-      <h2>Producto 13</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 14 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto14_1.jpg" alt="Producto 14 imagen 1">
-        <img src="img/producto14_2.jpg" alt="Producto 14 imagen 2">
-        <img src="img/producto14_3.jpg" alt="Producto 14 imagen 3">
-        <img src="img/producto14_4.jpg" alt="Producto 14 imagen 4">
-      </div>
-      <h2>Producto 14</h2>
-      <p class="price">$12.000</p>
-    </div>
-
- <!-- Producto 15 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto15_1.jpg" alt="Producto 15 imagen 1">
-        <img src="img/producto15_2.jpg" alt="Producto 15 imagen 2">
-        <img src="img/producto15_3.jpg" alt="Producto 15 imagen 3">
-        <img src="img/producto15_4.jpg" alt="Producto 15 imagen 4">
-      </div>
-      <h2>Producto 15</h2>
-      <p class="price">$12.000</p>
-    </div>
-
-
-
-
-    <!-- Producto 2 al 15... -->
-    <!-- Puedes copiar y pegar este bloque y cambiar el número -->
+    <!-- END productos -->
   </section>
 </body>
 </html>
