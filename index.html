@@ -144,38 +144,255 @@
     <a href="#" onclick="filtrarProductos('correajes')">Correajes</a>
     <a href="#" onclick="filtrarProductos('todos')">Inicio</a>
   </nav>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zona Táctica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background-color: #555;
+    }
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .producto {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+    .carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .producto h3 {
+      margin: 0.5rem 0;
+    }
+    .producto p {
+      margin: 0.2rem 0;
+    }
+    .agregar-carrito {
+      margin-top: auto;
+      padding: 0.5rem 1rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .agregar-carrito:disabled {
+      background-color: red;
+      cursor: not-allowed;
+    }
+    #carrito {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+    #carrito ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #carrito li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    #carrito button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="inicio">Zona Táctica</h1>
+  </header>
+  <nav>
+    <a href="#" onclick="filtrarProductos('todos')">Productos</a>
+    <a href="#" onclick="filtrarProductos('pantalones')">Pantalones</a>
+    <a href="#" onclick="filtrarProductos('borceguies')">Borceguíes</a>
+    <a href="#" onclick="filtrarProductos('cinturones')">Cinturones</a>
+    <a href="#" onclick="filtrarProductos('camperas')">Camperas</a>
+    <a href="#" onclick="filtrarProductos('correajes')">Correajes</a>
+    <a href="#" onclick="filtrarProductos('todos')">Inicio</a>
+  </nav>
   <div class="productos" id="productos">
-    <!-- Producto 1: Borcegos -->
-  <div class="product-card borcegos">
-    <div class="image-container">
-      <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active" />
-      <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2" />
-      <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3" />
-      <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4" />
-    </div>
-    <h2>Borcegos Magnum</h2>
-    <p class="price">ARS $150.000</p>
-<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
-  Agregar al carrito
-</button>
-
+    <!-- Los productos serán cargados dinámicamente aquí -->
   </div>
-
-  <!-- Producto 2: Campera -->
-  <div class="product-card campera">
-    <div class="image-container">
-      <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active" />
-      <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2" />
-      <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3" />
-      <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4" />
-    </div>
-    <h2>Campera Táctica</h2>
-    <p class="price">ARS $200.000</p>
-<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000" data-stock="5">
-  Agregar al carrito
-</button>
-
+  <div id="carrito">
+    <h3>Carrito</h3>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0</span></p>
+    <button onclick="finalizarCompra()">Finalizar compra</button>
   </div>
+  <script>
+    const productos = [
+      {
+        id: 1,
+        nombre: "Pantalón táctico",
+        precio: 15000,
+        categoria: "pantalones",
+        imagenes: ["img/pantalon1.jpg", "img/pantalon2.jpg"],
+        stock: 5
+      },
+      {
+        id: 2,
+        nombre: "Borceguí negro",
+        precio: 20000,
+        categoria: "borceguies",
+        imagenes: ["img/borcegui1.jpg"],
+        stock: 0
+      }
+      // Agregar más productos si es necesario
+    ];
+
+    let carrito = [];
+
+    function mostrarProductos(lista) {
+      const contenedor = document.getElementById('productos');
+      contenedor.innerHTML = '';  // Limpiar el contenedor antes de agregar nuevos productos
+
+      lista.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'producto';
+
+        // Crear carrusel de imágenes
+        const carrusel = document.createElement('div');
+        carrusel.className = 'carousel';
+        p.imagenes.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          if (i === 0) img.classList.add('active');
+          carrusel.appendChild(img);
+        });
+
+        let index = 0;
+        setInterval(() => {
+          const imgs = carrusel.querySelectorAll('img');
+          imgs[index].classList.remove('active');
+          index = (index + 1) % imgs.length;
+          imgs[index].classList.add('active');
+        }, 3000);
+
+        div.appendChild(carrusel);
+        div.innerHTML += `<h3>${p.nombre}</h3><p>$${p.precio}</p>`;
+
+        // Crear el botón para agregar al carrito
+        const btn = document.createElement('button');
+        btn.className = 'agregar-carrito';
+        btn.textContent = p.stock > 0 ? 'Agregar al carrito' : 'Sin Stock';
+        btn.disabled = p.stock === 0;
+        btn.onclick = () => agregarAlCarrito(p);
+        div.appendChild(btn);
+
+        contenedor.appendChild(div);
+      });
+    }
+
+    function filtrarProductos(cat) {
+      if (cat === 'todos') {
+        mostrarProductos(productos);
+      } else {
+        const filtrados = productos.filter(p => p.categoria === cat);
+        mostrarProductos(filtrados);
+      }
+    }
+
+    function agregarAlCarrito(prod) {
+      carrito.push(prod);
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      const lista = document.getElementById('lista-carrito');
+      const totalSpan = document.getElementById('total');
+      lista.innerHTML = '';
+      let total = 0;
+      carrito.forEach((item, index) => {
+        total += item.precio;
+        const li = document.createElement('li');
+        li.innerHTML = `${item.nombre} - $${item.precio} <button onclick="eliminarDelCarrito(${index})">X</button>`;
+        lista.appendChild(li);
+      });
+      totalSpan.textContent = total;
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function finalizarCompra() {
+      if (carrito.length === 0) {
+        alert('El carrito está vacío.');
+        return;
+      }
+      alert('Compra finalizada. ¡Gracias por tu compra!');
+      carrito = [];
+      actualizarCarrito();
+    }
+
+    // Mostrar todos los productos al cargar
+    window.onload = () => mostrarProductos(productos);
+  </script>
+</body>
+</html>
+
   <div id="carrito">
     <h3>Carrito</h3>
     <ul id="lista-carrito"></ul>
