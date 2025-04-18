@@ -272,6 +272,27 @@
 
   </style>
 </head>
+
+<script>
+  const filterLinks = document.querySelectorAll('.dropdown-menu a');
+  const productCards = document.querySelectorAll('.product-card');
+
+  filterLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const category = link.dataset.category;
+
+      productCards.forEach(card => {
+        if (category === 'all' || card.classList.contains(category)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
 <body>
 
   <header>
@@ -280,20 +301,22 @@
     </div>
     <nav class="nav-center">
       <a href="#">Inicio</a>
-      <div class="dropdown">
-  <a href="#productos" class="dropdown-toggle">Productos</a>
+     <div class="dropdown">
+  <a href="#" class="dropdown-toggle">PRODUCTOS</a>
   <div class="dropdown-menu">
-    <a href="#chaleco">Chaleco porta placa</a>
-    <a href="#cinturon">Cinturón</a>
-    <a href="#accesorios">Accesorios</a>
-    <a href="#pantalon">Pantalón</a>
-    <a href="#campera">Campera</a>
-    <a href="#borcegos">Borcegos</a>
-    <a href="#mochilas">Mochilas</a>
-    <a href="#morrales">Morrales</a>
-    <a href="#chucherias">Chucherías varias</a>
+    <a href="#" data-category="borcegos">Borcegos</a>
+    <a href="#" data-category="campera">Campera</a>
+    <a href="#" data-category="pantalon">Pantalon</a>
+    <a href="#" data-category="mochilas">Mochilas</a>
+    <a href="#" data-category="morrales">Morrales</a>
+    <a href="#" data-category="chaleco">Chaleco Porta Placa</a>
+    <a href="#" data-category="cinturon">Cinturón</a>
+    <a href="#" data-category="accesorios">Accesorios</a>
+    <a href="#" data-category="chucherias">Chucherías varias</a>
+    <a href="#" data-category="all">Todos</a>
   </div>
 </div>
+
 
 <div class="contacto-dropdown">
   <a href="#" class="contacto-link">Contacto</a>
@@ -315,29 +338,28 @@
     </div>
   </div>
 
-  <section class="products" id="productos">
-    <div class="product-card">
-      <div class="image-container">
-        <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active" />
-        <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2" />
-        <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3" />
-        <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4" />
-      </div>
-      <h2>Borcegos Magnum</h2>
-      <p class="price">ARS $150.000</p>
+ <section class="products" id="productos">
+  <div class="product-card borcegos">
+    <div class="image-container">
+      <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active" />
+      <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2" />
+      <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3" />
+      <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4" />
     </div>
+    <h2>Borcegos Magnum</h2>
+    <p class="price">ARS $150.000</p>
+  </div>
 
-<div class="product">
-<div class="product-card">
-      <div class="image-container">
-        <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active">
-        <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2">
-        <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3">
-        <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">ARS $150.000</p>
+ <div class="product-card campera">
+    <div class="image-container">
+      <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active" />
+      <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2" />
+      <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3" />
+      <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4" />
     </div>
+    <h2>Campera Táctica</h2>
+    <p class="price">ARS $200.000</p>
+  </div>
 
   </section>
 
