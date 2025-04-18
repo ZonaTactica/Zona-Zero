@@ -209,6 +209,54 @@
   color: #555;
   margin-top: auto; /* Empuja el precio hacia abajo para que no se superponga con la imagen */
 }
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 5px 10px;
+  transition: color 0.3s;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+  background-color: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+  background-color: #555;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  transform: translateX(-50%) scaleY(1);
+  opacity: 1;
+}
 
   </style>
 </head>
@@ -220,7 +268,21 @@
     </div>
     <nav class="nav-center">
       <a href="#">Inicio</a>
-      <a href="#productos">Productos</a>
+      <div class="dropdown">
+  <a href="#productos" class="dropdown-toggle">Productos</a>
+  <div class="dropdown-menu">
+    <a href="#chaleco">Chaleco porta placa</a>
+    <a href="#cinturon">Cinturón</a>
+    <a href="#accesorios">Accesorios</a>
+    <a href="#pantalon">Pantalón</a>
+    <a href="#campera">Campera</a>
+    <a href="#borcegos">Borcegos</a>
+    <a href="#mochilas">Mochilas</a>
+    <a href="#morrales">Morrales</a>
+    <a href="#chucherias">Chucherías varias</a>
+  </div>
+</div>
+
 <div class="contacto-dropdown">
   <a href="#" class="contacto-link">Contacto</a>
   <div class="dropdown-content">
