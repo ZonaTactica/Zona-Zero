@@ -478,4 +478,73 @@
   document.querySelector('.nav-center a').addEventListener('click', () => {
     filterProducts("todos"); // Mostrar todos los productos al hacer clic en INICIO
   });
+const carrito = [];
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+
+function actualizarCarrito() {
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  carrito.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      ${item.nombre} - ARS $${item.precio} 
+      <button onclick="eliminarDelCarrito(${index})" style="margin-left: 10px;">❌</button>
+    `;
+    cartItems.appendChild(li);
+    total += item.precio;
+  });
+
+  cartTotal.textContent = `Total: ARS $${total.toLocaleString()}`;
+}
+
+function eliminarDelCarrito(index) {
+  carrito.splice(index, 1);
+  actualizarCarrito();
+}
+
+document.querySelectorAll('.add-to-cart').forEach(boton => {
+  boton.addEventListener('click', () => {
+    const nombre = boton.getAttribute('data-name');
+    const precio = parseFloat(boton.getAttribute('data-price'));
+    const stock = parseInt(boton.getAttribute('data-stock'));
+
+    // Verificar stock antes de agregar
+    const cantidadEnCarrito = carrito.filter(p => p.nombre === nombre).length;
+    if (cantidadEnCarrito < stock) {
+      carrito.push({ nombre, precio });
+      actualizarCarrito();
+    } else {
+      alert("No hay más stock disponible de este producto.");
+    }
+  });
+});
+
+// Botón Finalizar Compra
+document.getElementById('finalizar-compra').addEventListener('click', () => {
+  if (carrito.length === 0) {
+    alert("El carrito está vacío.");
+    return;
+  }
+
+  let resumen = "Resumen de tu pedido:\n";
+  const resumenItems = {};
+
+  carrito.forEach(item => {
+    resumenItems[item.nombre] = (resumenItems[item.nombre] || 0) + 1;
+  });
+
+  for (const nombre in resumenItems) {
+    resumen += `- ${nombre} x${resumenItems[nombre]}\n`;
+  }
+
+  resumen += `\nTotal: ${cartTotal.textContent}\n\n¿Deseás finalizar tu compra?`;
+
+  if (confirm(resumen)) {
+    alert("¡Gracias por tu compra! Te contactaremos por WhatsApp o mail para coordinar el pago.");
+    carrito.length = 0;
+    actualizarCarrito();
+  }
+});
 </script>
