@@ -480,17 +480,33 @@
   });
 // ========== FUNCIONALIDAD DE CARRITO ==========
 
-const carrito = JSON.parse(localStorage.getItem('carrito')) || []; // Cargar carrito desde localStorage
+// Cargar carrito desde localStorage
+const carrito = JSON.parse(localStorage.getItem('carrito')) || []; 
 const cartItems = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
 
 // Lista de productos con stock inicial
 const productos = [
-  { nombre: 'Producto 1', precio: 1000, stock: 5 },
-  { nombre: 'Producto 2', precio: 1200, stock: 5 },
-  // Agrega más productos según sea necesario
+  {
+    nombre: 'Borcegos Magnum',
+    precio: 150000,
+    stock: 5,
+    id: 'producto1',
+    imagenes: ['img/producto1_1.jpg', 'img/producto1_2.jpg', 'img/producto1_3.jpg', 'img/producto1_4.jpg']
+  },
+  {
+    nombre: 'Campera Táctica',
+    precio: 200000,
+    stock: 5,
+    id: 'producto2',
+    imagenes: ['img/producto2_1.jpg', 'img/producto2_2.jpg', 'img/producto2_3.jpg', 'img/producto2_4.jpg']
+  }
 ];
 
+// Recuperar el stock guardado en localStorage si existe
+const stockGuardado = JSON.parse(localStorage.getItem('stock')) || productos.map(p => ({ id: p.id, stock: p.stock }));
+
+// Función para actualizar el carrito en la interfaz
 function actualizarCarrito() {
   cartItems.innerHTML = "";
   let total = 0;
@@ -507,19 +523,21 @@ function actualizarCarrito() {
 
   cartTotal.textContent = `Total: ARS $${total.toLocaleString()}`;
 
-  // Guardar carrito en localStorage
+  // Guardar el carrito actualizado en localStorage
   localStorage.setItem('carrito', JSON.stringify(carrito));
   actualizarStock(); // Actualizar los mensajes de stock
 }
 
+// Función para eliminar un producto del carrito
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
   actualizarCarrito();
 }
 
+// Función para actualizar el stock en la interfaz y deshabilitar botones si es necesario
 function actualizarStock() {
   productos.forEach((producto, index) => {
-    const productoElemento = document.querySelector(`#producto-${index}`);
+    const productoElemento = document.querySelector(`#producto-${producto.id}`);
     const stockRestante = producto.stock - (carrito.filter(item => item.nombre === producto.nombre).length);
     const stockMensaje = productoElemento.querySelector('.stock-msg');
 
@@ -532,10 +550,17 @@ function actualizarStock() {
       stockMensaje.style.color = 'green';
       productoElemento.querySelector('.add-to-cart').disabled = false; // Habilitar botón si hay stock
     }
+
+    // Guardar el stock actualizado en localStorage
+    const stockActualizado = stockGuardado.find(item => item.id === producto.id);
+    if (stockRestante < 5) {
+      stockActualizado.stock = stockRestante;
+    }
+    localStorage.setItem('stock', JSON.stringify(stockGuardado));
   });
 }
 
-// Botón Finalizar Compra
+// Función para finalizar la compra
 document.getElementById('finalizar-compra').addEventListener('click', () => {
   if (carrito.length === 0) {
     alert("El carrito está vacío.");
@@ -563,32 +588,35 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
   }
 });
 
-// Cargar productos en la página (agregar solo productos definidos)
+// Función para cargar los productos en la página
 function cargarProductos() {
   productos.forEach((producto, index) => {
     const div = document.createElement('div');
-    div.id = `producto-${index}`;
-    div.classList.add('producto');
+    div.id = `producto-${producto.id}`;
+    div.classList.add('product-card');
     div.innerHTML = `
-      <h3>${producto.nombre}</h3>
-      <p>Precio: ARS $${producto.precio}</p>
+      <div class="image-container">
+        <img src="${producto.imagenes[0]}" alt="${producto.nombre} imagen 1" class="active" />
+        <img src="${producto.imagenes[1]}" alt="${producto.nombre} imagen 2" />
+        <img src="${producto.imagenes[2]}" alt="${producto.nombre} imagen 3" />
+        <img src="${producto.imagenes[3]}" alt="${producto.nombre} imagen 4" />
+      </div>
+      <h2>${producto.nombre}</h2>
+      <p class="price">ARS $${producto.precio}</p>
       <p class="stock-msg">Stock: ${producto.stock}</p>
-      <button class="add-to-cart" data-name="${producto.nombre}" data-price="${producto.precio}" data-index="${index}">Agregar al carrito</button>
+      <button class="add-to-cart" data-id="${producto.id}" data-name="${producto.nombre}" data-price="${producto.precio}" data-stock="${producto.stock}">Agregar al carrito</button>
     `;
     document.getElementById('productos').appendChild(div);
   });
 }
 
-// Llamar a cargar los productos en la página cuando cargue el script
-cargarProductos();
-
 // Asignar evento a cada botón de "Agregar al carrito"
-document.querySelectorAll('.add-to-cart').forEach(boton => {
-  boton.addEventListener('click', (event) => {
+document.getElementById('productos').addEventListener('click', (event) => {
+  if (event.target.classList.contains('add-to-cart')) {
+    const idProducto = event.target.getAttribute('data-id');
     const nombre = event.target.getAttribute('data-name');
     const precio = parseFloat(event.target.getAttribute('data-price'));
-    const index = event.target.getAttribute('data-index');
-    const stock = productos[index].stock;
+    const stock = parseInt(event.target.getAttribute('data-stock'));
 
     // Verificar stock antes de agregar
     const cantidadEnCarrito = carrito.filter(p => p.nombre === nombre).length;
@@ -600,10 +628,9 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
     } else {
       alert("No hay más stock disponible de este producto.");
     }
-  });
+  }
 });
 
-// Cargar carrito y estado de stock al inicio
+// Cargar productos y estado de stock al inicio
+cargarProductos();
 actualizarCarrito();
-
-</script>
