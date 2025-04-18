@@ -93,6 +93,7 @@
       max-width: 100%;
       height: 180px;
       object-fit: contain;
+      transition: opacity 0.3s ease-in-out; /* Añadir transición */
     }
 
     .product-card h3 {
@@ -107,12 +108,17 @@
 
     .image-container {
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      height: 180px; /* Ajustar la altura */
     }
 
     .image-container img {
       display: none;
       width: 100%;
-      height: 180px;
+      height: 100%;
       object-fit: contain;
     }
 
@@ -150,7 +156,7 @@
     </div>
   </div>
 
-  <section class="products">
+  <section class="products" id="productos">
     <div class="product-card">
       <div class="image-container">
         <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active" />
@@ -161,6 +167,7 @@
       <h2>Borcegos Magnum</h2>
       <p class="price">ARS $150.000</p>
     </div>
+
   </section>
 
   <footer id="contacto">
@@ -168,11 +175,29 @@
   </footer>
 
   <script>
-    const images = document.querySelectorAll('.image-container img');
-    images.forEach((img, index) => {
+    // Carrusel: cambiar las imágenes de los productos
+    const productImages = document.querySelectorAll('.image-container img');
+    let currentImageIndex = 0; // Empezamos con la primera imagen
+
+    function changeImage() {
+      // Remover la clase 'active' de la imagen actual
+      productImages[currentImageIndex].classList.remove('active');
+      
+      // Incrementar el índice y asegurarnos de que no pase del total de imágenes
+      currentImageIndex = (currentImageIndex + 1) % productImages.length;
+      
+      // Añadir la clase 'active' a la siguiente imagen
+      productImages[currentImageIndex].classList.add('active');
+    }
+
+    // Cambiar imagen cada 3 segundos (3000 milisegundos)
+    setInterval(changeImage, 3000);
+
+    // Permitir el cambio de imagen al hacer clic (opcional)
+    productImages.forEach((img, index) => {
       img.addEventListener('click', () => {
-        images.forEach(i => i.classList.remove('active')); // Remueve la clase 'active' de todas las imágenes
-        img.classList.add('active'); // Añade la clase 'active' solo a la imagen clickeada
+        productImages.forEach(i => i.classList.remove('active'));
+        img.classList.add('active');
       });
     });
   </script>
