@@ -584,17 +584,22 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
 });
 
 // Inicialización de los productos en la página
-productos.forEach((producto, index) => {
-  const div = document.createElement('div');
-  div.id = `producto-${index}`;
-  div.innerHTML = `
-    <h3>${producto.nombre}</h3>
-    <p>Precio: ARS $${producto.precio}</p>
-    <p class="stock-msg">Stock: ${producto.stock}</p>
-    <button class="add-to-cart" data-name="${producto.nombre}" data-price="${producto.precio}" data-index="${index}">Agregar al carrito</button>
-  `;
-  document.getElementById('productos').appendChild(div);
-});
+function cargarProductos() {
+  productos.forEach((producto, index) => {
+    const div = document.createElement('div');
+    div.id = `producto-${index}`;
+    div.innerHTML = `
+      <h3>${producto.nombre}</h3>
+      <p>Precio: ARS $${producto.precio}</p>
+      <p class="stock-msg">Stock: ${producto.stock}</p>
+      <button class="add-to-cart" data-name="${producto.nombre}" data-price="${producto.precio}" data-index="${index}">Agregar al carrito</button>
+    `;
+    document.getElementById('productos').appendChild(div);
+  });
+}
+
+// Cargar productos en la página cuando se carga el script
+cargarProductos();
 
 // Cargar carrito y estado de stock al inicio
 actualizarCarrito();
