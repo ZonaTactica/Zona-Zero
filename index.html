@@ -21,7 +21,7 @@
       text-align: center;
       position: relative;
       display: flex;
-      justify-content: space-around; /* Alinea los elementos en línea horizontalmente */
+      justify-content: space-around;
       align-items: center;
     }
 
@@ -156,7 +156,6 @@
       top: 120px;
       transition: opacity 0.5s, top 0.5s ease-in-out;
     }
-
   </style>
 </head>
 <body>
@@ -173,18 +172,6 @@
     </div>
   </nav>
 
-  <!-- Menú desplegable de productos -->
-  <div id="filtro-productos" class="filtro oculto">
-    <ul>
-      <li><a href="#">Camperas</a></li>
-      <li><a href="#">Borcegos</a></li>
-      <li><a href="#">Cinturones</a></li>
-      <li><a href="#">Morrales</a></li>
-      <li><a href="#">Mochilas</a></li>
-      <li><a href="#">Elementos</a></li>
-    </ul>
-  </div>
-
   <!-- Cuadro de contacto -->
   <div id="cuadro-contacto" class="cuadro oculto">
     <p>📧 <strong>Correo:</strong> zonatactica02@gmail.com</p>
@@ -200,7 +187,7 @@
     <p>Tu tienda de ropa táctica de confianza.</p>
   </header>
 
- <section class="products">
+   <section class="products">
     <!-- Productos 1 al 15 -->
     <div class="product">
       <div class="image-container">
@@ -370,15 +357,15 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const btnInicio = document.getElementById("btnInicio");
-    const btnProductos = document.getElementById("btnProductos");
-    const btnContacto = document.getElementById("btnContacto");
-    const btnCarrito = document.getElementById("btnCarrito");
+    const btnInicio = document.getElementById("inicio-btn");
+    const btnProductos = document.getElementById("productos-btn");
+    const btnContacto = document.getElementById("contacto-btn");
+    const btnCarrito = document.getElementById("carrito-btn");
 
     const filtro = document.getElementById("filtro-productos");
     const productos = document.getElementById("productos");
     const contacto = document.getElementById("contacto");
-    const carrito = document.getElementById("cuadro-carrito");
+    const carrito = document.getElementById("mensaje-carrito");
 
     function ocultarTodo() {
       [filtro, contacto, carrito].forEach(el => {
@@ -399,7 +386,6 @@
       productos.classList.remove("oculto");
     });
 
-    // Mostrar los elementos al pasar el mouse
     btnProductos.addEventListener("mouseenter", () => {
       mostrarElemento(filtro);
     });
@@ -412,30 +398,13 @@
       mostrarElemento(carrito);
     });
 
-    // Se debe ocultar el contenido solo si el mouse sale de la zona correspondiente
     [filtro, contacto, carrito].forEach(el => {
       el.addEventListener("mouseleave", () => {
         el.classList.remove("visible");
         el.classList.add("oculto");
       });
     });
-
-    const filtroItems = document.querySelectorAll(".filtro-item");
-    const todosLosProductos = document.querySelectorAll(".product");
-
-    filtroItems.forEach(item => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const categoria = item.getAttribute("data-categoria");
-        ocultarTodo();
-        if (categoria === "todos") {
-          todosLosProductos.forEach(prod => prod.style.display = "block");
-        } else {
-          todosLosProductos.forEach(prod => {
-            prod.style.display = prod.classList.contains(categoria) ? "block" : "none";
-          });
-        }
-      });
-    });
   });
 </script>
+</body>
+</html>
