@@ -149,34 +149,6 @@
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #222;
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-}
-
-.contacto-dropdown:hover .dropdown-content,
-.dropdown-content:hover {
-  display: block;
-}
-.contacto-dropdown {
-  position: relative;
-}
-
-.contacto-link {
-  position: relative;
-  z-index: 2;
-}
-
-.dropdown-content {
   position: absolute;
   top: 40px;
   left: 50%;
@@ -200,7 +172,6 @@
   opacity: 1;
   pointer-events: auto;
 }
-
   </style>
 </head>
 <body>
@@ -212,7 +183,7 @@
     <nav class="nav-center">
       <a href="#">Inicio</a>
       <a href="#productos">Productos</a>
-    <div class="contacto-dropdown">
+<div class="contacto-dropdown">
   <a href="#contacto" class="contacto-link">Contacto</a>
   <div class="dropdown-content">
     <p>Correo: transportepuntacorral@yahoo.com.ar</p>
