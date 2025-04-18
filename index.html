@@ -395,6 +395,7 @@
 
       // Hover sobre el menú
       btnProductos.addEventListener("mouseenter", () => {
+        if (!filtro.querySelector("ul").hasChildNodes()) return; // Evita mostrar vacío
         mostrarElemento(filtro);
       });
 
@@ -415,16 +416,19 @@
       });
 
       // Control de imágenes del producto (carrusel)
-      const imageContainers = document.querySelectorAll('.image-container');
-      imageContainers.forEach(container => {
-        const images = container.querySelectorAll('img');
+      function startCarousel(product) {
+        const images = product.querySelectorAll('.image-container img');
         let activeIndex = 0;
-        setInterval(() => {
+        product._carouselInterval = setInterval(() => {
           images[activeIndex].classList.remove('active');
           activeIndex = (activeIndex + 1) % images.length;
           images[activeIndex].classList.add('active');
         }, 3000); // Cambia la imagen cada 3 segundos
-      });
+      }
+
+      function stopCarousel(product) {
+        clearInterval(product._carouselInterval); // Detener carrusel cuando el mouse se va
+      }
     });
   </script>
 </body>
