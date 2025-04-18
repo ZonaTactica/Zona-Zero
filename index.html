@@ -1,349 +1,139 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zona Táctica</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
+    * {
       margin: 0;
-      background-color: #fff;
-      color: #333;
-    }
-
-    .navbar {
-      background-color: #000;
-      padding: 10px 0;
-      text-align: center;
-      position: relative;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .navbar ul {
-      list-style: none;
       padding: 0;
-      margin: 0;
-      display: flex;
-      gap: 30px;
+      box-sizing: border-box;
     }
 
-    .navbar a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-      font-size: 18px;
-      position: relative;
-      display: inline-block;
-      padding: 10px 20px;
-    }
-
-    .navbar a:before {
-      content: "-";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 2px;
-      background-color: #fff;
-      transform: scaleX(0);
-      transform-origin: bottom right;
-      transition: transform 0.3s ease-out;
-    }
-
-    .navbar a:hover:before {
-      transform: scaleX(1);
-      transform-origin: bottom left;
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
     }
 
     header {
-      text-align: center;
-      padding: 100px 20px 40px;
-      background-color: #908072;
+      background-color: #7b6857;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: 36px;
+    .nav-left {
+      flex: 1;
+    }
+
+    .nav-left i {
+      font-size: 24px;
+      color: #000;
+    }
+
+    .nav-center {
+      flex: 2;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .nav-center a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 700;
+      transition: color 0.3s;
+    }
+
+    .nav-center a:hover {
+      color: #ddd;
+    }
+
+    .main-title {
+      text-align: center;
+      margin: 30px 0 10px;
+      font-size: 32px;
+      color: #333;
+      font-weight: 700;
     }
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 20px;
-      padding: 40px;
+      padding: 20px;
     }
 
-    .product {
-      background-color: #fafafa;
+    .product-card {
+      background: #fff;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden;
-      position: relative;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
     }
 
-    .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    .product-card img {
+      max-width: 100%;
+      height: 180px;
+      object-fit: contain;
     }
 
-    .image-container {
-      position: relative;
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
+    .product-card h3 {
+      margin: 10px 0 5px;
+      font-size: 18px;
     }
 
-    .image-container img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    .image-container img.active {
-      opacity: 1;
-    }
-
-    .carousel-controls {
-      position: absolute;
-      width: 100%;
-      top: 50%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      padding: 0 10px;
-      display: none;
-    }
-
-    .product:hover .carousel-controls {
-      display: flex;
-    }
-
-    .carousel-controls button {
-      background-color: rgba(0,0,0,0.5);
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      padding: 5px 10px;
-      border-radius: 5px;
+    .product-card p {
+      font-size: 16px;
+      color: #555;
     }
 
     footer {
-      background-color: #000;
-      color: #fff;
+      background: #222;
+      color: #ccc;
       text-align: center;
-      padding: 20px;
-      font-size: 14px;
+      padding: 15px;
       margin-top: 40px;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Zona Táctica</h1>
+    <div class="nav-left">
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+    <nav class="nav-center">
+      <a href="#">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
   </header>
 
- <section class="products">
-    <!-- Productos 1 al 15 -->
-    <div class="product">
-      <div class="image-container">
-        <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active">
-        <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2">
-        <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3">
-        <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4">
-      </div>
-      <h2>Borcegos Magnum</h2>
-      <p class="price">300.000 ARS</p>
-    </div>
+  <h1 class="main-title">Zona Táctica</h1>
 
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active">
-        <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2">
-        <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3">
-        <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
+  <section class="products" id="productos">
+    <div class="product-card">
+      <img src="https://i.imgur.com/LyKfGgY.png" alt="Borcegos Magnum">
+      <h3>Borcegos Magnum</h3>
+      <p>300.000 ARS</p>
     </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto3_1.jpg" alt="Producto 3 imagen 1" class="active">
-        <img src="img/producto3_2.jpg" alt="Producto 3 imagen 2">
-        <img src="img/producto3_3.jpg" alt="Producto 3 imagen 3">
-        <img src="img/producto3_4.jpg" alt="Producto 3 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
+    <div class="product-card">
+      <img src="https://i.imgur.com/NnOkEPF.png" alt="Campera Táctica">
+      <h3>Campera Táctica</h3>
+      <p>150.000 ARS</p>
     </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto4_1.jpg" alt="Producto 4 imagen 1" class="active">
-        <img src="img/producto4_2.jpg" alt="Producto 4 imagen 2">
-        <img src="img/producto4_3.jpg" alt="Producto 4 imagen 3">
-        <img src="img/producto4_4.jpg" alt="Producto 4 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto5_1.jpg" alt="Producto 5 imagen 1" class="active">
-        <img src="img/producto5_2.jpg" alt="Producto 5 imagen 2">
-        <img src="img/producto5_3.jpg" alt="Producto 5 imagen 3">
-        <img src="img/producto5_4.jpg" alt="Producto 5 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto6_1.jpg" alt="Producto 6 imagen 1" class="active">
-        <img src="img/producto6_2.jpg" alt="Producto 6 imagen 2">
-        <img src="img/producto6_3.jpg" alt="Producto 6 imagen 3">
-        <img src="img/producto6_4.jpg" alt="Producto 6 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto7_1.jpg" alt="Producto 7 imagen 1" class="active">
-        <img src="img/producto7_2.jpg" alt="Producto 7 imagen 2">
-        <img src="img/producto7_3.jpg" alt="Producto 7 imagen 3">
-        <img src="img/producto7_4.jpg" alt="Producto 7 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto8_1.jpg" alt="Producto 8 imagen 1" class="active">
-        <img src="img/producto8_2.jpg" alt="Producto 8 imagen 2">
-        <img src="img/producto8_3.jpg" alt="Producto 8 imagen 3">
-        <img src="img/producto8_4.jpg" alt="Producto 8 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto9_1.jpg" alt="Producto 9 imagen 1" class="active">
-        <img src="img/producto9_2.jpg" alt="Producto 9 imagen 2">
-        <img src="img/producto9_3.jpg" alt="Producto 9 imagen 3">
-        <img src="img/producto9_4.jpg" alt="Producto 9 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto10_1.jpg" alt="Producto 10 imagen 1" class="active">
-        <img src="img/producto10_2.jpg" alt="Producto 10 imagen 2">
-        <img src="img/producto10_3.jpg" alt="Producto 10 imagen 3">
-        <img src="img/producto10_4.jpg" alt="Producto 10 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto11_1.jpg" alt="Producto 11 imagen 1" class="active">
-        <img src="img/producto11_2.jpg" alt="Producto 11 imagen 2">
-        <img src="img/producto11_3.jpg" alt="Producto 11 imagen 3">
-        <img src="img/producto11_4.jpg" alt="Producto 11 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto12_1.jpg" alt="Producto 12 imagen 1" class="active">
-        <img src="img/producto12_2.jpg" alt="Producto 12 imagen 2">
-        <img src="img/producto12_3.jpg" alt="Producto 12 imagen 3">
-        <img src="img/producto12_4.jpg" alt="Producto 12 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto13_1.jpg" alt="Producto 13 imagen 1" class="active">
-        <img src="img/producto13_2.jpg" alt="Producto 13 imagen 2">
-        <img src="img/producto13_3.jpg" alt="Producto 13 imagen 3">
-        <img src="img/producto13_4.jpg" alt="Producto 13 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto14_1.jpg" alt="Producto 14 imagen 1" class="active">
-        <img src="img/producto14_2.jpg" alt="Producto 14 imagen 2">
-        <img src="img/producto14_3.jpg" alt="Producto 14 imagen 3">
-        <img src="img/producto14_4.jpg" alt="Producto 14 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
-
- <div class="product">
-      <div class="image-container">
-        <img src="img/producto15_1.jpg" alt="Producto 15 imagen 1" class="active">
-        <img src="img/producto15_2.jpg" alt="Producto 15 imagen 2">
-        <img src="img/producto15_3.jpg" alt="Producto 15 imagen 3">
-        <img src="img/producto15_4.jpg" alt="Producto 15 imagen 4">
-      </div>
-      <h2>Campera Táctica</h2>
-      <p class="price">150.000 Ars</p>
-    </div>
+    <!-- Más productos... -->
   </section>
 
-  <footer>
-    &copy; 2025 Zona Táctica. Todos los derechos reservados.
+  <footer id="contacto">
+    <p>Contacto: zonatactica@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
   </footer>
 
-  <script>
-    function nextImage(btn) {
-      const container = btn.closest('.image-container');
-      const images = container.querySelectorAll('img');
-      const current = Array.from(images).findIndex(img => img.classList.contains('active'));
-      images[current].classList.remove('active');
-      const nextIndex = (current + 1) % images.length;
-      images[nextIndex].classList.add('active');
-    }
-
-    function prevImage(btn) {
-      const container = btn.closest('.image-container');
-      const images = container.querySelectorAll('img');
-      const current = Array.from(images).findIndex(img => img.classList.contains('active'));
-      images[current].classList.remove('active');
-      const prevIndex = (current - 1 + images.length) % images.length;
-      images[prevIndex].classList.add('active');
-    }
-  </script>
 </body>
 </html>
