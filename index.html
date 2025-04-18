@@ -1,343 +1,360 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zona Táctica</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
+    body {
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      background-color: #fff;
+      color: #333;
     }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #ffffff;
+    .navbar {
+      background-color: #000;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 30px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 18px;
+      position: relative;
+      display: inline-block;
+      padding: 10px 20px;
+    }
+
+    .navbar a:before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+
+    .navbar a:hover:before {
+      transform: scaleX(1);
+      transform-origin: bottom left;
     }
 
     header {
-      background-color: #000000;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .nav-left {
-      position: absolute;
-      left: 20px;
-    }
-
-    .nav-left i {
-      font-size: 24px;
-      color: #fff;
-    }
-
-    .nav-center {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-    }
-
-    .nav-center a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 700;
-      transition: color 0.3s;
-    }
-
-    .nav-center a:hover {
-      color: #ddd;
-    }
-
-    .banner-container {
-      background-color: #6c5851;
-      color: #fff;
-      padding: 40px 0;
       text-align: center;
+      padding: 100px 20px 40px;
+      background-color: #908072;
     }
 
-    .main-title {
-      font-size: 48px;
-      color: #fff;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .banner {
-      font-size: 20px;
+    h1 {
+      margin: 0 0 10px;
+      font-size: 36px;
     }
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
-      padding: 20px;
+      padding: 40px;
     }
 
-    .product-card {
-      background: #fff;
+    .product {
+      background-color: #fafafa;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 15px;
-      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      position: relative;
     }
 
-    .product-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-
-    .product-card img {
-      max-width: 100%;
-      height: 180px;
-      object-fit: contain;
-      transition: opacity 0.3s ease-in-out;
-    }
-
-    .product-card h3 {
-      margin: 10px 0 5px;
-      font-size: 18px;
-    }
-
-    .product-card p {
-      font-size: 16px;
-      color: #555;
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     .image-container {
       position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
+      height: 200px;
       overflow: hidden;
-      height: 180px;
     }
 
     .image-container img {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
     }
 
     .image-container img.active {
-      display: block;
+      opacity: 1;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 10px;
+      display: none;
+    }
+
+    .product:hover .carousel-controls {
+      display: flex;
+    }
+
+    .carousel-controls button {
+      background-color: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
     }
 
     footer {
-      background: #222;
-      color: #ccc;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-
-    .cart-container {
-      background-color: #f5f5f5;
-      padding: 20px;
-      margin: 40px auto;
-      border-radius: 12px;
-      max-width: 600px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .cart-container h2 {
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    #cart-items {
-      list-style: none;
-      padding: 0;
-    }
-
-    #cart-items li {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    #cart-total {
-      font-weight: bold;
-      margin-top: 10px;
-      text-align: right;
-    }
-
-    #finalizar-compra {
-      margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      background-color: #444;
+      background-color: #000;
       color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      margin-top: 40px;
     }
   </style>
 </head>
-
 <body>
   <header>
-    <div class="nav-left">
-      <i class="fas fa-shopping-cart"></i>
-    </div>
-    <nav class="nav-center">
-      <a href="#">Inicio</a>
-      <div class="dropdown">
-        <a href="#" class="dropdown-toggle">PRODUCTOS</a>
-        <div class="dropdown-menu">
-          <a href="#" data-category="borcegos">Borcegos</a>
-          <a href="#" data-category="campera">Campera</a>
-          <a href="#" data-category="pantalon">Pantalon</a>
-          <a href="#" data-category="mochilas">Mochilas</a>
-          <a href="#" data-category="morrales">Morrales</a>
-          <a href="#" data-category="chaleco">Chaleco Porta Placa</a>
-          <a href="#" data-category="cinturon">Cinturón</a>
-          <a href="#" data-category="accesorios">Accesorios</a>
-          <a href="#" data-category="chucherias">Chucherías varias</a>
-          <a href="#" data-category="all">Todos</a>
-        </div>
-      </div>
-      <div class="contacto-dropdown">
-        <a href="#" class="contacto-link">Contacto</a>
-        <div class="dropdown-content">
-          <p><i class="fas fa-envelope"></i> Correo: transportepuntacorral@yahoo.com.ar</p>
-          <p><i class="fas fa-phone-alt"></i> Número de WhatsApp: 54 11-62873365</p>
-        </div>
-      </div>
-    </nav>
-  </header>
+    <h1>Zona Táctica</h1>
 
-  <div class="banner-container">
-    <h1 class="main-title">Zona Táctica</h1>
-    <div class="banner">Equipos y accesorios de calidad para operaciones tácticas</div>
+<body>
+  <div class="navbar">
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
   </div>
 
-  <section class="products" id="productos">
-    <!-- Producto 1: Borcegos -->
-    <div class="product-card borcegos">
+  <header>
+    <h1>Zona Táctica</h1>
+  </header>
+
+ <section class="products">
+    <!-- Productos 1 al 15 -->
+    <div class="product">
       <div class="image-container">
-        <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active" />
-        <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2" />
-        <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3" />
-        <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4" />
+        <img src="img/producto1_1.jpg" alt="Producto 1 imagen 1" class="active">
+        <img src="img/producto1_2.jpg" alt="Producto 1 imagen 2">
+        <img src="img/producto1_3.jpg" alt="Producto 1 imagen 3">
+        <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4">
       </div>
       <h2>Borcegos Magnum</h2>
       <p class="price">ARS $150.000</p>
-      <button class="add-to-cart" data-id="1" data-name="Borcegos" data-price="150000" data-stock="10">Agregar al carrito</button>
     </div>
 
-    <!-- Producto 2: Campera -->
-    <div class="product-card campera">
+ <div class="product">
       <div class="image-container">
-        <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active" />
-        <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2" />
-        <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3" />
-        <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4" />
+        <img src="img/producto2_1.jpg" alt="Producto 2 imagen 1" class="active">
+        <img src="img/producto2_2.jpg" alt="Producto 2 imagen 2">
+        <img src="img/producto2_3.jpg" alt="Producto 2 imagen 3">
+        <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4">
       </div>
       <h2>Campera Táctica</h2>
-      <p class="price">ARS $200.000</p>
-      <button class="add-to-cart" data-id="2" data-name="Campera" data-price="200000" data-stock="15">Agregar al carrito</button>
+      <p class="price">ARS $150.000</p>
     </div>
-    <!-- Agregar más productos aquí -->
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto3_1.jpg" alt="Producto 3 imagen 1" class="active">
+        <img src="img/producto3_2.jpg" alt="Producto 3 imagen 2">
+        <img src="img/producto3_3.jpg" alt="Producto 3 imagen 3">
+        <img src="img/producto3_4.jpg" alt="Producto 3 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto4_1.jpg" alt="Producto 4 imagen 1" class="active">
+        <img src="img/producto4_2.jpg" alt="Producto 4 imagen 2">
+        <img src="img/producto4_3.jpg" alt="Producto 4 imagen 3">
+        <img src="img/producto4_4.jpg" alt="Producto 4 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto5_1.jpg" alt="Producto 5 imagen 1" class="active">
+        <img src="img/producto5_2.jpg" alt="Producto 5 imagen 2">
+        <img src="img/producto5_3.jpg" alt="Producto 5 imagen 3">
+        <img src="img/producto5_4.jpg" alt="Producto 5 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto6_1.jpg" alt="Producto 6 imagen 1" class="active">
+        <img src="img/producto6_2.jpg" alt="Producto 6 imagen 2">
+        <img src="img/producto6_3.jpg" alt="Producto 6 imagen 3">
+        <img src="img/producto6_4.jpg" alt="Producto 6 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto7_1.jpg" alt="Producto 7 imagen 1" class="active">
+        <img src="img/producto7_2.jpg" alt="Producto 7 imagen 2">
+        <img src="img/producto7_3.jpg" alt="Producto 7 imagen 3">
+        <img src="img/producto7_4.jpg" alt="Producto 7 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto8_1.jpg" alt="Producto 8 imagen 1" class="active">
+        <img src="img/producto8_2.jpg" alt="Producto 8 imagen 2">
+        <img src="img/producto8_3.jpg" alt="Producto 8 imagen 3">
+        <img src="img/producto8_4.jpg" alt="Producto 8 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto9_1.jpg" alt="Producto 9 imagen 1" class="active">
+        <img src="img/producto9_2.jpg" alt="Producto 9 imagen 2">
+        <img src="img/producto9_3.jpg" alt="Producto 9 imagen 3">
+        <img src="img/producto9_4.jpg" alt="Producto 9 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto10_1.jpg" alt="Producto 10 imagen 1" class="active">
+        <img src="img/producto10_2.jpg" alt="Producto 10 imagen 2">
+        <img src="img/producto10_3.jpg" alt="Producto 10 imagen 3">
+        <img src="img/producto10_4.jpg" alt="Producto 10 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto11_1.jpg" alt="Producto 11 imagen 1" class="active">
+        <img src="img/producto11_2.jpg" alt="Producto 11 imagen 2">
+        <img src="img/producto11_3.jpg" alt="Producto 11 imagen 3">
+        <img src="img/producto11_4.jpg" alt="Producto 11 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto12_1.jpg" alt="Producto 12 imagen 1" class="active">
+        <img src="img/producto12_2.jpg" alt="Producto 12 imagen 2">
+        <img src="img/producto12_3.jpg" alt="Producto 12 imagen 3">
+        <img src="img/producto12_4.jpg" alt="Producto 12 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto13_1.jpg" alt="Producto 13 imagen 1" class="active">
+        <img src="img/producto13_2.jpg" alt="Producto 13 imagen 2">
+        <img src="img/producto13_3.jpg" alt="Producto 13 imagen 3">
+        <img src="img/producto13_4.jpg" alt="Producto 13 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto14_1.jpg" alt="Producto 14 imagen 1" class="active">
+        <img src="img/producto14_2.jpg" alt="Producto 14 imagen 2">
+        <img src="img/producto14_3.jpg" alt="Producto 14 imagen 3">
+        <img src="img/producto14_4.jpg" alt="Producto 14 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
+
+ <div class="product">
+      <div class="image-container">
+        <img src="img/producto15_1.jpg" alt="Producto 15 imagen 1" class="active">
+        <img src="img/producto15_2.jpg" alt="Producto 15 imagen 2">
+        <img src="img/producto15_3.jpg" alt="Producto 15 imagen 3">
+        <img src="img/producto15_4.jpg" alt="Producto 15 imagen 4">
+      </div>
+      <h2>Campera Táctica</h2>
+      <p class="price">ARS $150.000</p>
+    </div>
   </section>
 
-  <div class="cart-container" id="cart-container">
-    <h2>Carrito de Compras</h2>
-    <ul id="cart-items">
-      <!-- Los productos del carrito se agregarán aquí -->
-    </ul>
-    <p id="cart-total">Total: ARS 0</p>
-    <button id="finalizar-compra">Finalizar compra</button>
-  </div>
-
   <footer>
-    <p>&copy; 2025 Zona Táctica - Todos los derechos reservados</p>
+    &copy; 2025 Zona Táctica. Todos los derechos reservados.
   </footer>
 
   <script>
-    // Función para manejar el carrito de compras
-    let cart = [];
-
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    const cartContainer = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    const finalizarCompraBtn = document.getElementById('finalizar-compra');
-
-    addToCartButtons.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        const product = e.target;
-        const productId = product.dataset.id;
-        const productName = product.dataset.name;
-        const productPrice = parseFloat(product.dataset.price);
-        const productStock = parseInt(product.dataset.stock);
-
-        // Verificar stock
-        if (productStock > 0) {
-          // Verificar si el producto ya está en el carrito
-          const existingProduct = cart.find((item) => item.id === productId);
-          if (existingProduct) {
-            existingProduct.quantity++;
-          } else {
-            cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
-          }
-
-          updateCart();
-        } else {
-          alert('No hay stock disponible para este producto.');
-        }
-      });
-    });
-
-    function updateCart() {
-      cartContainer.innerHTML = '';
-      let total = 0;
-
-      cart.forEach((item) => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `${item.name} - ${item.quantity} x ARS ${item.price} <button class="remove-from-cart" data-id="${item.id}">Eliminar</button>`;
-        cartContainer.appendChild(listItem);
-
-        total += item.price * item.quantity;
-      });
-
-      cartTotal.textContent = `Total: ARS ${total}`;
-      localStorage.setItem('cart', JSON.stringify(cart));
+    function nextImage(btn) {
+      const container = btn.closest('.image-container');
+      const images = container.querySelectorAll('img');
+      const current = Array.from(images).findIndex(img => img.classList.contains('active'));
+      images[current].classList.remove('active');
+      const nextIndex = (current + 1) % images.length;
+      images[nextIndex].classList.add('active');
     }
 
-    // Eliminar producto del carrito
-    cartContainer.addEventListener('click', (e) => {
-      if (e.target.classList.contains('remove-from-cart')) {
-        const productId = e.target.dataset.id;
-        cart = cart.filter((item) => item.id !== productId);
-        updateCart();
-      }
-    });
-
-    // Finalizar compra
-    finalizarCompraBtn.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('El carrito está vacío. Añade productos para comprar.');
-      } else {
-        alert('Compra realizada con éxito!');
-        cart = [];
-        updateCart();
-      }
-    });
-
-    // Cargar carrito desde el almacenamiento local
-    const storedCart = JSON.parse(localStorage.getItem('cart'));
-    if (storedCart) {
-      cart = storedCart;
-      updateCart();
+    function prevImage(btn) {
+      const container = btn.closest('.image-container');
+      const images = container.querySelectorAll('img');
+      const current = Array.from(images).findIndex(img => img.classList.contains('active'));
+      images[current].classList.remove('active');
+      const prevIndex = (current - 1 + images.length) % images.length;
+      images[prevIndex].classList.add('active');
     }
   </script>
 </body>
