@@ -375,6 +375,16 @@
 <button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
   Agregar al carrito
 </button>
+  <button class="ver-detalles" data-product="producto1">Ver detalles</button>
+  <div class="detalles-producto" id="detalles-producto1" style="display:none;">
+    <h3>Detalles de Borcegos Magnum</h3>
+    <p><strong>Descripción:</strong> Borcegos resistentes de alta calidad para operaciones tácticas.</p>
+    <p><strong>Talles:</strong> 39, 40, 41, 42, 43</p>
+    <p><strong>Colores:</strong> Negro, Camuflado</p>
+    <p><strong>Precio:</strong> ARS $150.000</p>
+    <button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
+      Agregar al carrito
+    </button>
 
   </div>
 
@@ -540,156 +550,19 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     actualizarCarrito();
   }
 });
-
-<!-- Modal para ver detalles del producto -->
-<div id="product-modal" class="modal">
-  <div class="modal-content">
-    <span id="close-modal" class="close-btn">&times;</span>
-    <h2 id="modal-product-name"></h2>
-    <div id="modal-product-images">
-      <!-- Imágenes del producto -->
-    </div>
-    <p id="modal-product-description"></p>
-    <p id="modal-product-price"></p>
-
-    <!-- Opciones de Talles -->
-    <label for="product-size">Talle:</label>
-    <select id="product-size">
-      <option value="S">S</option>
-      <option value="M">M</option>
-      <option value="L">L</option>
-      <option value="XL">XL</option>
-    </select>
-
-    <!-- Opciones de Color -->
-    <label for="product-color">Color:</label>
-    <select id="product-color">
-      <option value="negro">Negro</option>
-      <option value="camuflado">Camuflado</option>
-    </select>
-
-    <button id="add-to-cart-modal">Agregar al carrito</button>
-  </div>
-</div>
-
-<script>
-  // Modal
-  const modal = document.getElementById("product-modal");
-  const closeModal = document.getElementById("close-modal");
-  const addToCartModal = document.getElementById("add-to-cart-modal");
-
-  // Función para abrir el modal con el producto seleccionado
-  function openProductModal(product) {
-    // Actualiza el contenido del modal
-    document.getElementById("modal-product-name").textContent = product.name;
-    document.getElementById("modal-product-description").textContent = product.description;
-    document.getElementById("modal-product-price").textContent = `ARS $${product.price.toLocaleString()}`;
-
-    // Mostrar imágenes
-    const imagesContainer = document.getElementById("modal-product-images");
-    imagesContainer.innerHTML = "";
-    product.images.forEach(image => {
-      const img = document.createElement("img");
-      img.src = image;
-      imagesContainer.appendChild(img);
+// Función para mostrar detalles del producto
+document.querySelectorAll('.ver-detalles').forEach(button => {
+  button.addEventListener('click', (e) => {
+    // Ocultar todos los detalles de productos
+    document.querySelectorAll('.detalles-producto').forEach(detalles => {
+      detalles.style.display = 'none';
     });
 
-    // Mostrar el modal
-    modal.style.display = "block";
-
-    // Agregar al carrito desde el modal
-    addToCartModal.onclick = () => {
-      carrito.push({
-        nombre: product.name,
-        precio: product.price,
-        size: document.getElementById("product-size").value,
-        color: document.getElementById("product-color").value
-      });
-      actualizarCarrito();
-      modal.style.display = "none"; // Cerrar el modal después de agregar al carrito
-    };
-  }
-
-  // Cerrar el modal al hacer clic en la X
-  closeModal.onclick = () => {
-    modal.style.display = "none";
-  };
-
-  // Función para mostrar productos (ejemplo: borcegos)
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const productName = card.querySelector('h2').textContent;
-      let productData;
-
-      // Definir los datos del producto al hacer clic
-      if (productName === "Borcegos Magnum") {
-        productData = {
-          name: "Borcegos Magnum",
-          price: 150000,
-          description: "Borcegos tácticos de alta resistencia, ideales para operaciones especiales.",
-          images: ["img/producto1_1.jpg", "img/producto1_2.jpg", "img/producto1_3.jpg", "img/producto1_4.jpg"]
-        };
-      } else if (productName === "Campera Táctica") {
-        productData = {
-          name: "Campera Táctica",
-          price: 200000,
-          description: "Campera táctica con múltiples bolsillos, resistente y cómoda.",
-          images: ["img/producto2_1.jpg", "img/producto2_2.jpg", "img/producto2_3.jpg", "img/producto2_4.jpg"]
-        };
-      }
-
-      // Abrir el modal con la información del producto
-      openProductModal(productData);
-    });
+    // Mostrar los detalles del producto que fue clickeado
+    const productId = button.getAttribute('data-product');
+    const detalles = document.getElementById(`detalles-${productId}`);
+    detalles.style.display = 'block';
   });
-</script>
-
-<style>
-  /* Estilos para el modal */
-  .modal {
-    display: none; /* Ocultar el modal por defecto */
-    position: fixed;
-    z-index: 1; /* Asegura que el modal esté encima de todo */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-  }
-
-  .modal-content {
-    background-color: #fff;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-  }
-
-  .close-btn {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 25px;
-    font-family: 'Roboto', sans-serif;
-    cursor: pointer;
-  }
-
-  .close-btn:hover,
-  .close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  #modal-product-images img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-</style>
+});
 
 </script>
