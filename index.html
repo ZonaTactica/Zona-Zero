@@ -471,6 +471,23 @@
       <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4" />
     </div>
     <h2>Borcegos Magnum</h2>
+
+<!-- Ejemplo de selección de color y talle en el producto -->
+<select id="product-color">
+  <option value="Negro">Negro</option>
+  <option value="Camuflado">Camuflado</option>
+</select>
+
+<select id="product-size">
+  <option value="39">39</option>
+  <option value="40">40</option>
+  <option value="41">41</option>
+  <option value="42">42</option>
+  <option value="43">43</option>
+</select>
+
+<button id="add-to-cart" data-id="producto1">Agregar al carrito</button>
+
     <p class="price">ARS $150.000</p>
 <button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
   Agregar al carrito
@@ -650,6 +667,8 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
   });
 });
 
+<div id="cart-container"></div>
+
 // Botón Finalizar Compra
 document.getElementById('finalizar-compra').addEventListener('click', () => {
   if (carrito.length === 0) {
@@ -813,5 +832,54 @@ document.querySelectorAll('.info-product').forEach(button => {
     showProductInfo(productId);
   });
 });
+
+<script>
+  // Función para agregar el producto al carrito
+  document.getElementById('add-to-cart').addEventListener('click', () => {
+    const productId = document.getElementById('add-to-cart').getAttribute('data-id');
+    const color = document.getElementById('product-color').value;
+    const size = document.getElementById('product-size').value;
+
+    // Producto a agregar al carrito
+    const product = {
+      id: productId,
+      color: color,
+      size: size,
+      quantity: 1,
+      price: 150000 // Ajusta el precio según el producto
+    };
+
+    addToCart(product);
+  });
+
+  // Función para agregar al carrito y almacenarlo en LocalStorage
+  function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartDisplay();
+  }
+
+  // Función para mostrar el carrito
+  function updateCartDisplay() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.getElementById('cart-container');
+    cartContainer.innerHTML = '';
+
+    cart.forEach(product => {
+      const productElement = document.createElement('div');
+      productElement.classList.add('cart-item');
+      
+      // Mostrar los detalles del producto en el carrito
+      productElement.innerHTML = `
+        <p><strong>Producto:</strong> ${product.id}</p>
+        <p><strong>Color:</strong> ${product.color}</p>
+        <p><strong>Talle:</strong> ${product.size}</p>
+        <p><strong>Cantidad:</strong> ${product.quantity}</p>
+        <p><strong>Precio:</strong> ARS ${product.price}</p>
+      `;
+      cartContainer.appendChild(productElement);
+    });
+  }
 
 </script>
