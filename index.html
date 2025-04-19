@@ -484,12 +484,16 @@
   <option value="41">41</option>
   <option value="42">42</option>
   <option value="43">43</option>
+  <option value="44">44</option>
+  <option value="45">45</option>
+  <option value="46">46</option>
+  <option value="47">47</option>
 </select>
 
 <button id="add-to-cart" data-id="producto1">Agregar al carrito</button>
 
     <p class="price">ARS $150.000</p>
-<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
+<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000">
   Agregar al carrito
 <button class="info-product" data-id="producto1">Información</button>
 
@@ -506,8 +510,26 @@
       <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4" />
     </div>
     <h2>Campera Táctica</h2>
+
+    <select id="product-color">
+  <option value="Negro">Negro</option>
+  <option value="Verde">Verde</option>
+  <option value="Desierto">Desierto</option>
+</select>
+
+<select id="product-size">
+  <option value="XS">XS</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+  <option value="XL">XL</option>
+  <option value="XXL">XXL</option>
+</select>
+
+<button id="add-to-cart" data-id="producto1">Agregar al carrito</button>
+
     <p class="price">ARS $200.000</p>
-<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000" data-stock="5">
+<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000">
   Agregar al carrito
 </button>
 
@@ -522,7 +544,7 @@
 </div>
 
 <footer id="contacto">
-  <p>Contacto: zonatactica@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
+  <p>Contacto: transportepuntacorral@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
 </footer>
 
 <!-- Modal para mostrar detalles del producto -->
@@ -666,7 +688,6 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
     actualizarCarrito();
   });
 });
-
 <div id="cart-container"></div>
 
 // Botón Finalizar Compra
@@ -832,10 +853,7 @@ document.querySelectorAll('.info-product').forEach(button => {
     showProductInfo(productId);
   });
 });
-
-<script>
-  // Función para agregar el producto al carrito
-  document.getElementById('add-to-cart').addEventListener('click', () => {
+document.getElementById('add-to-cart').addEventListener('click', () => {
     const productId = document.getElementById('add-to-cart').getAttribute('data-id');
     const color = document.getElementById('product-color').value;
     const size = document.getElementById('product-size').value;
