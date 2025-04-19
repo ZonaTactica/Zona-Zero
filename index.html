@@ -313,106 +313,6 @@
   cursor: pointer;
 }
 
-/* Estilo para el modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
-  backdrop-filter: blur(5px); /* Efecto desenfocado en el fondo */
-}
-
-/* Estilo del contenido del modal */
-.modal-content {
-  background-color: #fff;
-  margin: 5% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 75%; /* 75% del tamaño de la ventana */
-  max-width: 1000px; /* No más de 1000px de ancho */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Estilo para cerrar el modal */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Estilo para las imágenes */
-#modal-images {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-}
-
-#main-image {
-  width: 60%;
-  height: auto;
-  margin-right: 20px;
-  border-radius: 8px;
-}
-
-#image-gallery {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.thumbnail {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.thumbnail:hover {
-  transform: scale(1.1);
-}
-
-/* Opciones del modal */
-#modal-options {
-  margin-top: 20px;
-}
-
-#add-to-cart-modal {
-  background-color: #444;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-<!-- Modal para mostrar detalles del producto -->
-<div id="product-info-modal" class="modal">
-  <div class="modal-content">
-    <span id="close-info-modal" class="close">&times;</span>
-    <h2 id="info-modal-title"></h2>
-    <div id="info-modal-description"></div>
-  </div>
-</div>
-
   </style>
 </head>
 
@@ -471,32 +371,9 @@
       <img src="img/producto1_4.jpg" alt="Producto 1 imagen 4" />
     </div>
     <h2>Borcegos Magnum</h2>
-
-<!-- Ejemplo de selección de color y talle en el producto -->
-<select id="product-color">
-  <option value="Negro">Negro</option>
-  <option value="Camuflado">Camuflado</option>
-</select>
-
-<select id="product-size">
-  <option value="39">39</option>
-  <option value="40">40</option>
-  <option value="41">41</option>
-  <option value="42">42</option>
-  <option value="43">43</option>
-  <option value="44">44</option>
-  <option value="45">45</option>
-  <option value="46">46</option>
-  <option value="47">47</option>
-</select>
-
-<button id="add-to-cart" data-id="producto1">Agregar al carrito</button>
-
     <p class="price">ARS $150.000</p>
-<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000">
+<button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
   Agregar al carrito
-<button class="info-product" data-id="producto1">Información</button>
-
 </button>
 
   </div>
@@ -510,26 +387,8 @@
       <img src="img/producto2_4.jpg" alt="Producto 2 imagen 4" />
     </div>
     <h2>Campera Táctica</h2>
-
-    <select id="product-color">
-  <option value="Negro">Negro</option>
-  <option value="Verde">Verde</option>
-  <option value="Desierto">Desierto</option>
-</select>
-
-<select id="product-size">
-  <option value="XS">XS</option>
-  <option value="S">S</option>
-  <option value="M">M</option>
-  <option value="L">L</option>
-  <option value="XL">XL</option>
-  <option value="XXL">XXL</option>
-</select>
-
-<button id="add-to-cart" data-id="producto1">Agregar al carrito</button>
-
     <p class="price">ARS $200.000</p>
-<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000">
+<button class="add-to-cart" data-id="producto2" data-name="Campera Táctica" data-price="200000" data-stock="5">
   Agregar al carrito
 </button>
 
@@ -544,42 +403,8 @@
 </div>
 
 <footer id="contacto">
-  <p>Contacto: transportepuntacorral@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
+  <p>Contacto: zonatactica@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
 </footer>
-
-<!-- Modal para mostrar detalles del producto -->
-<div id="product-modal" class="modal">
-  <div class="modal-content">
-    <span id="close-modal" class="close">&times;</span>
-    <h2 id="modal-title"></h2>
-    <div id="modal-description"></div>
-    <div id="modal-images">
-      <img id="main-image" src="" alt="Imagen principal">
-      <div id="image-gallery">
-        <!-- Las imágenes pequeñas van aquí -->
-        <img class="thumbnail" src="" alt="Imagen secundaria">
-        <img class="thumbnail" src="" alt="Imagen secundaria">
-        <img class="thumbnail" src="" alt="Imagen secundaria">
-      </div>
-    </div>
-    <div id="modal-options">
-      <label for="size">Tamaño: </label>
-      <select id="size">
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-      </select>
-      <label for="color">Color: </label>
-      <select id="color">
-        <option value="Negro">Negro</option>
-        <option value="Verde">Verde</option>
-        <option value="Camo">Camo</option>
-      </select>
-      <button id="add-to-cart-modal">Agregar al carrito</button>
-    </div>
-  </div>
-</div>
 
 <script>
   // Carrusel de imágenes para productos
@@ -688,7 +513,6 @@ document.querySelectorAll('.add-to-cart').forEach(boton => {
     actualizarCarrito();
   });
 });
-<div id="cart-container"></div>
 
 // Botón Finalizar Compra
 document.getElementById('finalizar-compra').addEventListener('click', () => {
@@ -716,188 +540,4 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     actualizarCarrito();
   }
 });
-
-// Abrir el modal con los detalles del producto
-function openProductModal(product) {
-  const modal = document.getElementById('product-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDescription = document.getElementById('modal-description');
-  const mainImage = document.getElementById('main-image');
-  const imageGallery = document.getElementById('image-gallery');
-
-  modalTitle.textContent = product.name;
-  modalDescription.innerHTML = `
-    <p><strong>Descripción:</strong> ${product.description}</p>
-    <p><strong>Precio:</strong> ARS $${product.price}</p>
-    <p><strong>Stock disponible:</strong> ${product.stock}</p>
-  `;
-
-  // Establecer imagen principal
-  mainImage.src = product.images[0]; // Primera imagen como principal
-  imageGallery.innerHTML = ''; // Limpiar galería de imágenes
-
-  // Añadir miniaturas de imágenes secundarias
-  product.images.slice(1).forEach((imgSrc) => {
-    const imgElement = document.createElement('img');
-    imgElement.src = imgSrc;
-    imgElement.classList.add('thumbnail');
-    imgElement.onclick = () => mainImage.src = imgSrc; // Cambiar imagen principal
-    imageGallery.appendChild(imgElement);
-  });
-
-  // Mostrar el modal
-  modal.style.display = 'block';
-
-  // Agregar producto al carrito desde el modal
-  document.getElementById('add-to-cart-modal').onclick = function () {
-    carrito.push({
-      nombre: product.name,
-      precio: product.price
-    });
-    actualizarCarrito();
-    modal.style.display = 'none'; // Cerrar el modal después de agregar al carrito
-  };
-}
-
-// Cerrar el modal cuando se hace clic en la "X"
-document.getElementById('close-modal').onclick = function () {
-  document.getElementById('product-modal').style.display = 'none';
-};
-
-// Cerrar el modal si se hace clic fuera del modal
-window.onclick = function (event) {
-  if (event.target === document.getElementById('product-modal')) {
-    document.getElementById('product-modal').style.display = 'none';
-  }
-};
-
-// Definir los productos con detalles y sus imágenes
-const products = [
-  {
-    id: 'producto1',
-    name: 'Borcegos Magnum',
-    price: 150000,
-    description: 'Borcegos de alta calidad, ideales para actividades tácticas.',
-    stock: 5,
-    images: [
-      'path-to-image-main.jpg', // Imagen principal
-      'path-to-image1.jpg', // Miniatura 1
-      'path-to-image2.jpg', // Miniatura 2
-      'path-to-image3.jpg'  // Miniatura 3
-    ]
-  },
-  {
-    id: 'producto2',
-    name: 'Campera Táctica',
-    price: 200000,
-    description: 'Campera tácticamente diseñada, cómoda y resistente.',
-    stock: 5,
-    images: [
-      'path-to-image-main.jpg',
-      'path-to-image1.jpg',
-      'path-to-image2.jpg',
-      'path-to-image3.jpg'
-    ]
-  }
-];
-
-// Agregar evento de clic en cada producto para abrir el modal
-document.querySelectorAll('.product-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const productId = card.querySelector('button').getAttribute('data-id');
-    const product = products.find(p => p.id === productId);
-    openProductModal(product);
-  });
-});
-// Función para mostrar el modal de información
-function showProductInfo(productId) {
-  const productDetails = {
-    producto1: {
-      title: "Borcegos Magnum",
-      description: "Borcegos resistentes de alta calidad para operaciones tácticas.",
-      price: "ARS $150.000",
-      sizes: "39, 40, 41, 42, 43",
-      colors: "Negro, Camuflado"
-    },
-    producto2: {
-      title: "Campera Táctica",
-      description: "Campera táctica ideal para todo tipo de operaciones.",
-      price: "ARS $200.000",
-      sizes: "M, L, XL",
-      colors: "Negro, Verde"
-    }
-  };
-
-  const product = productDetails[productId];
-  if (product) {
-    document.getElementById('info-modal-title').textContent = product.title;
-    document.getElementById('info-modal-description').innerHTML = `
-      <p><strong>Descripción:</strong> ${product.description}</p>
-      <p><strong>Precio:</strong> ${product.price}</p>
-      <p><strong>Talles:</strong> ${product.sizes}</p>
-      <p><strong>Colores:</strong> ${product.colors}</p>
-    `;
-    document.getElementById('product-info-modal').style.display = 'block';
-  }
-}
-
-// Función para cerrar el modal de información
-document.getElementById('close-info-modal').addEventListener('click', () => {
-  document.getElementById('product-info-modal').style.display = 'none';
-});
-
-// Agregar el evento al botón "Información"
-document.querySelectorAll('.info-product').forEach(button => {
-  button.addEventListener('click', (e) => {
-    const productId = e.target.getAttribute('data-id');
-    showProductInfo(productId);
-  });
-});
-document.getElementById('add-to-cart').addEventListener('click', () => {
-    const productId = document.getElementById('add-to-cart').getAttribute('data-id');
-    const color = document.getElementById('product-color').value;
-    const size = document.getElementById('product-size').value;
-
-    // Producto a agregar al carrito
-    const product = {
-      id: productId,
-      color: color,
-      size: size,
-      quantity: 1,
-      price: 150000 // Ajusta el precio según el producto
-    };
-
-    addToCart(product);
-  });
-
-  // Función para agregar al carrito y almacenarlo en LocalStorage
-  function addToCart(product) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(product);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartDisplay();
-  }
-
-  // Función para mostrar el carrito
-  function updateCartDisplay() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartContainer = document.getElementById('cart-container');
-    cartContainer.innerHTML = '';
-
-    cart.forEach(product => {
-      const productElement = document.createElement('div');
-      productElement.classList.add('cart-item');
-      
-      // Mostrar los detalles del producto en el carrito
-      productElement.innerHTML = `
-        <p><strong>Producto:</strong> ${product.id}</p>
-        <p><strong>Color:</strong> ${product.color}</p>
-        <p><strong>Talle:</strong> ${product.size}</p>
-        <p><strong>Cantidad:</strong> ${product.quantity}</p>
-        <p><strong>Precio:</strong> ARS ${product.price}</p>
-      `;
-      cartContainer.appendChild(productElement);
-    });
-  }
-
 </script>
