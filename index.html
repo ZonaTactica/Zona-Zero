@@ -313,6 +313,55 @@
   cursor: pointer;
 }
 
+/* Estilo para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modal-options {
+  margin-top: 20px;
+}
+
+#add-to-cart-modal {
+  background-color: #444;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
   </style>
 </head>
 
@@ -415,6 +464,31 @@
 <footer id="contacto">
   <p>Contacto: zonatactica@gmail.com | WhatsApp: +54 9 11 1234-5678</p>
 </footer>
+
+<!-- Modal para mostrar detalles del producto -->
+<div id="product-modal" class="modal">
+  <div class="modal-content">
+    <span id="close-modal" class="close">&times;</span>
+    <h2 id="modal-title"></h2>
+    <div id="modal-description"></div>
+    <div id="modal-options">
+      <label for="size">Tamaño: </label>
+      <select id="size">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+      <label for="color">Color: </label>
+      <select id="color">
+        <option value="Negro">Negro</option>
+        <option value="Verde">Verde</option>
+        <option value="Camo">Camo</option>
+      </select>
+      <button id="add-to-cart-modal">Agregar al carrito</button>
+    </div>
+  </div>
+</div>
 
 <script>
   // Carrusel de imágenes para productos
@@ -550,18 +624,68 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     actualizarCarrito();
   }
 });
-// Función para mostrar detalles del producto
-document.querySelectorAll('.ver-detalles').forEach(button => {
-  button.addEventListener('click', (e) => {
-    // Ocultar todos los detalles de productos
-    document.querySelectorAll('.detalles-producto').forEach(detalles => {
-      detalles.style.display = 'none';
-    });
+function openProductModal(product) {
+  const modal = document.getElementById('product-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDescription = document.getElementById('modal-description');
 
-    // Mostrar los detalles del producto que fue clickeado
-    const productId = button.getAttribute('data-product');
-    const detalles = document.getElementById(`detalles-${productId}`);
-    detalles.style.display = 'block';
+  modalTitle.textContent = product.name;
+  modalDescription.innerHTML = `
+    <p><strong>Descripción:</strong> ${product.description}</p>
+    <p><strong>Precio:</strong> ARS $${product.price}</p>
+    <p><strong>Stock disponible:</strong> ${product.stock}</p>
+  `;
+
+  // Mostrar el modal
+  modal.style.display = 'block';
+
+  // Agregar producto al carrito desde el modal
+  document.getElementById('add-to-cart-modal').onclick = function () {
+    carrito.push({
+      nombre: product.name,
+      precio: product.price
+    });
+    actualizarCarrito();
+    modal.style.display = 'none'; // Cerrar el modal después de agregar al carrito
+  };
+}
+
+// Cerrar el modal cuando se hace clic en la "X"
+document.getElementById('close-modal').onclick = function () {
+  document.getElementById('product-modal').style.display = 'none';
+};
+
+// Cerrar el modal si se hace clic fuera del modal
+window.onclick = function (event) {
+  if (event.target === document.getElementById('product-modal')) {
+    document.getElementById('product-modal').style.display = 'none';
+  }
+};
+
+// Definir los productos con detalles
+const products = [
+  {
+    id: 'producto1',
+    name: 'Borcegos Magnum',
+    price: 150000,
+    description: 'Borcegos de alta calidad, ideales para actividades tácticas.',
+    stock: 5
+  },
+  {
+    id: 'producto2',
+    name: 'Campera Táctica',
+    price: 200000,
+    description: 'Campera tácticamente diseñada, cómoda y resistente.',
+    stock: 5
+  }
+];
+
+// Agregar evento de clic en cada producto para abrir el modal
+document.querySelectorAll('.product-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const productId = card.querySelector('button').getAttribute('data-id');
+    const product = products.find(p => p.id === productId);
+    openProductModal(product);
   });
 });
 
