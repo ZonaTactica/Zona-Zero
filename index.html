@@ -322,19 +322,24 @@
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
+  backdrop-filter: blur(5px); /* Efecto desenfocado en el fondo */
 }
 
+/* Estilo del contenido del modal */
 .modal-content {
   background-color: #fff;
-  margin: 10% auto;
+  margin: 5% auto;
   padding: 20px;
   border-radius: 8px;
-  width: 80%;
-  max-width: 500px;
+  width: 75%; /* 75% del tamaño de la ventana */
+  max-width: 1000px; /* No más de 1000px de ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Estilo para cerrar el modal */
 .close {
   color: #aaa;
   float: right;
@@ -349,6 +354,44 @@
   cursor: pointer;
 }
 
+/* Estilo para las imágenes */
+#modal-images {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+}
+
+#main-image {
+  width: 60%;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+#image-gallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+
+/* Opciones del modal */
 #modal-options {
   margin-top: 20px;
 }
@@ -424,16 +467,6 @@
 <button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
   Agregar al carrito
 </button>
-  <button class="ver-detalles" data-product="producto1">Ver detalles</button>
-  <div class="detalles-producto" id="detalles-producto1" style="display:none;">
-    <h3>Detalles de Borcegos Magnum</h3>
-    <p><strong>Descripción:</strong> Borcegos resistentes de alta calidad para operaciones tácticas.</p>
-    <p><strong>Talles:</strong> 39, 40, 41, 42, 43</p>
-    <p><strong>Colores:</strong> Negro, Camuflado</p>
-    <p><strong>Precio:</strong> ARS $150.000</p>
-    <button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
-      Agregar al carrito
-    </button>
 
   </div>
 
@@ -471,6 +504,15 @@
     <span id="close-modal" class="close">&times;</span>
     <h2 id="modal-title"></h2>
     <div id="modal-description"></div>
+    <div id="modal-images">
+      <img id="main-image" src="" alt="Imagen principal">
+      <div id="image-gallery">
+        <!-- Las imágenes pequeñas van aquí -->
+        <img class="thumbnail" src="" alt="Imagen secundaria">
+        <img class="thumbnail" src="" alt="Imagen secundaria">
+        <img class="thumbnail" src="" alt="Imagen secundaria">
+      </div>
+    </div>
     <div id="modal-options">
       <label for="size">Tamaño: </label>
       <select id="size">
@@ -624,10 +666,14 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     actualizarCarrito();
   }
 });
+
+// Abrir el modal con los detalles del producto
 function openProductModal(product) {
   const modal = document.getElementById('product-modal');
   const modalTitle = document.getElementById('modal-title');
   const modalDescription = document.getElementById('modal-description');
+  const mainImage = document.getElementById('main-image');
+  const imageGallery = document.getElementById('image-gallery');
 
   modalTitle.textContent = product.name;
   modalDescription.innerHTML = `
@@ -635,6 +681,19 @@ function openProductModal(product) {
     <p><strong>Precio:</strong> ARS $${product.price}</p>
     <p><strong>Stock disponible:</strong> ${product.stock}</p>
   `;
+
+  // Establecer imagen principal
+  mainImage.src = product.images[0]; // Primera imagen como principal
+  imageGallery.innerHTML = ''; // Limpiar galería de imágenes
+
+  // Añadir miniaturas de imágenes secundarias
+  product.images.slice(1).forEach((imgSrc) => {
+    const imgElement = document.createElement('img');
+    imgElement.src = imgSrc;
+    imgElement.classList.add('thumbnail');
+    imgElement.onclick = () => mainImage.src = imgSrc; // Cambiar imagen principal
+    imageGallery.appendChild(imgElement);
+  });
 
   // Mostrar el modal
   modal.style.display = 'block';
@@ -662,21 +721,33 @@ window.onclick = function (event) {
   }
 };
 
-// Definir los productos con detalles
+// Definir los productos con detalles y sus imágenes
 const products = [
   {
     id: 'producto1',
     name: 'Borcegos Magnum',
     price: 150000,
     description: 'Borcegos de alta calidad, ideales para actividades tácticas.',
-    stock: 5
+    stock: 5,
+    images: [
+      'path-to-image-main.jpg', // Imagen principal
+      'path-to-image1.jpg', // Miniatura 1
+      'path-to-image2.jpg', // Miniatura 2
+      'path-to-image3.jpg'  // Miniatura 3
+    ]
   },
   {
     id: 'producto2',
     name: 'Campera Táctica',
     price: 200000,
     description: 'Campera tácticamente diseñada, cómoda y resistente.',
-    stock: 5
+    stock: 5,
+    images: [
+      'path-to-image-main.jpg',
+      'path-to-image1.jpg',
+      'path-to-image2.jpg',
+      'path-to-image3.jpg'
+    ]
   }
 ];
 
