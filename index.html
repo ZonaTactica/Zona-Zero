@@ -269,6 +269,76 @@
   opacity: 1;
   pointer-events: auto;
 }
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .nav-left {
+    position: static;
+    margin-bottom: 10px;
+  }
+
+  .nav-center {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nav-center a,
+  .dropdown-toggle,
+  .contacto-link {
+    font-size: 16px;
+    padding: 5px 0;
+  }
+
+  .dropdown-menu,
+  .dropdown-content {
+    left: 0;
+    transform: scaleY(1) !important;
+    transform-origin: top left;
+  }
+
+  .dropdown:hover .dropdown-menu,
+  .contacto-dropdown:hover .dropdown-content {
+    left: 0;
+    transform: scaleY(1);
+  }
+
+  .banner-container {
+    padding: 25px 10px;
+  }
+
+  .main-title {
+    font-size: 32px;
+  }
+
+  .banner {
+    font-size: 16px;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .product-card {
+    height: auto;
+    padding: 10px;
+  }
+
+  .product-card img {
+    height: 140px;
+  }
+
+  footer {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
 
   </style>
 </head>
@@ -590,4 +660,4 @@
   document.querySelector('.nav-center a').addEventListener('click', () => {
     filterProducts("todos"); // Mostrar todos los productos al hacer clic en INICIO
   });
-</script>"
+</script>
