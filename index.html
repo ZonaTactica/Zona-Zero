@@ -404,6 +404,14 @@
   border-radius: 8px;
   cursor: pointer;
 }
+<!-- Modal para mostrar detalles del producto -->
+<div id="product-info-modal" class="modal">
+  <div class="modal-content">
+    <span id="close-info-modal" class="close">&times;</span>
+    <h2 id="info-modal-title"></h2>
+    <div id="info-modal-description"></div>
+  </div>
+</div>
 
   </style>
 </head>
@@ -466,6 +474,8 @@
     <p class="price">ARS $150.000</p>
 <button class="add-to-cart" data-id="producto1" data-name="Borcegos Magnum" data-price="150000" data-stock="5">
   Agregar al carrito
+<button class="info-product" data-id="producto1">Información</button>
+
 </button>
 
   </div>
@@ -757,6 +767,50 @@ document.querySelectorAll('.product-card').forEach(card => {
     const productId = card.querySelector('button').getAttribute('data-id');
     const product = products.find(p => p.id === productId);
     openProductModal(product);
+  });
+});
+// Función para mostrar el modal de información
+function showProductInfo(productId) {
+  const productDetails = {
+    producto1: {
+      title: "Borcegos Magnum",
+      description: "Borcegos resistentes de alta calidad para operaciones tácticas.",
+      price: "ARS $150.000",
+      sizes: "39, 40, 41, 42, 43",
+      colors: "Negro, Camuflado"
+    },
+    producto2: {
+      title: "Campera Táctica",
+      description: "Campera táctica ideal para todo tipo de operaciones.",
+      price: "ARS $200.000",
+      sizes: "M, L, XL",
+      colors: "Negro, Verde"
+    }
+  };
+
+  const product = productDetails[productId];
+  if (product) {
+    document.getElementById('info-modal-title').textContent = product.title;
+    document.getElementById('info-modal-description').innerHTML = `
+      <p><strong>Descripción:</strong> ${product.description}</p>
+      <p><strong>Precio:</strong> ${product.price}</p>
+      <p><strong>Talles:</strong> ${product.sizes}</p>
+      <p><strong>Colores:</strong> ${product.colors}</p>
+    `;
+    document.getElementById('product-info-modal').style.display = 'block';
+  }
+}
+
+// Función para cerrar el modal de información
+document.getElementById('close-info-modal').addEventListener('click', () => {
+  document.getElementById('product-info-modal').style.display = 'none';
+});
+
+// Agregar el evento al botón "Información"
+document.querySelectorAll('.info-product').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const productId = e.target.getAttribute('data-id');
+    showProductInfo(productId);
   });
 });
 
